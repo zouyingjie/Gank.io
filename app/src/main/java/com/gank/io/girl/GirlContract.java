@@ -3,6 +3,9 @@ package com.gank.io.girl;
 import com.gank.io.BasePresenter;
 import com.gank.io.BaseView;
 
+import rx.Observer;
+import rx.Subscription;
+
 /**
  * Created by zouyingjie on 16/8/26.
  */
@@ -10,7 +13,13 @@ import com.gank.io.BaseView;
 public class GirlContract {
 
     interface View extends BaseView<Presenter> {
-        void refreshView();
+
+        void unsubscribe();
+        void startRefresh();
+        void endRefresh();
+        Observer observer();
+        Subscription subscription();
+        void setSubscription();
 
     }
 
