@@ -13,6 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Api {
     private static GankApi gankApi;
+    private static ZhuangXApi zhuangXApi;
     private static OkHttpClient okHttpClient = new OkHttpClient();
     private static Converter.Factory gsonConverterFactory = GsonConverterFactory.create();
     private static CallAdapter.Factory rxJavaCallAdapterFactory = RxJavaCallAdapterFactory.create();
@@ -28,5 +29,18 @@ public class Api {
             gankApi = retrofit.create(GankApi.class);
         }
         return gankApi;
+    }
+    public static ZhuangXApi getZhuangXApi(){
+        if (zhuangXApi == null){
+            Retrofit retrofit = new Retrofit.Builder()
+                    .client(okHttpClient)
+                    .baseUrl("http://zhuangbi.info/")
+                    .addConverterFactory(gsonConverterFactory)
+                    .build();
+            zhuangXApi = retrofit.create(ZhuangXApi.class);
+
+        }
+
+        return zhuangXApi;
     }
 }

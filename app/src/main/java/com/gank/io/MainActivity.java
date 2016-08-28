@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.gank.io.girl.GirlActivity;
+import com.gank.io.zhuangbi.ZhuangXActivity;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -84,6 +85,8 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
+            Intent intent = new Intent(this, ZhuangXActivity.class);
+            startActivity(intent);
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
 

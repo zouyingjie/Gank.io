@@ -1,10 +1,16 @@
 package com.gank.io.girl;
 
 import android.support.annotation.Nullable;
+import android.widget.Toast;
 
+import com.gank.io.model.GankGirlItem;
 import com.gank.io.network.api.Api;
 import com.gank.io.util.GankBeautyResultToItemsMapper;
 
+import java.util.List;
+
+import rx.Observer;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -15,32 +21,51 @@ import rx.schedulers.Schedulers;
 public class GirlPresenter implements GirlContract.Presenter {
     private GirlContract.View girlView;
     private int page = 0;
+    private Subscription subscription;
 
-    public GirlPresenter(@Nullable GirlContract.View girlView){
+    Observer<List<GankGirlItem>> observer = new Observer<List<GankGirlItem>>() {
+        @Override
+        public void onCompleted() {
+            Toast.makeText(((GirlFragment) girlView).getContext(), "Completed", Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            girlView.endRefresh();
+            Toast.makeText(((GirlFragment) girlView).getContext(), e.toString(), Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onNext(List<GankGirlItem> images) {
+            girlView.endRefresh();
+            girlView.refreshImages(images);
+        }
+    };
+
+    public GirlPresenter(@Nullable GirlContract.View girlView) {
         this.girlView = girlView;
         this.girlView.setPresenter(this);
-
     }
 
     @Override
     public void loadImage() {
-        girlView.unsubscribe();
+        unsubscribe();
         girlView.startRefresh();
-        Api.getGankApi()
+        subscription = Api.getGankApi()
                 .getBeauties(10, page++)
                 .map(GankBeautyResultToItemsMapper.getInstance())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(girlView.observer());
+                .subscribe(observer);
     }
 
     @Override
-    public void showImage() {
-
-    }
+    public void start() {}
 
     @Override
-    public void start() {
-
+    public void unsubscribe() {
+        if (subscription != null && !subscription.isUnsubscribed()) {
+            subscription.unsubscribe();
+        }
     }
 }
