@@ -3,34 +3,30 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+
             android:icon="@drawable/ic_menu_camera"
-            android:title="装X趣图" />
+            android:title="@string/menu_zhuangx" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
+
             android:icon="@drawable/ic_menu_manage"
-            android:title="Girl" />
+            android:title="@string/menu_girl" />
     </group>
 
-    <item android:title="Communicate">
+
+    <item>
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:id="@+id/nav_zhuang_x"
+                android:icon="@drawable/ic_menu_camera"
+                android:title="@string/menu_zhuangx" />
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:id="@+id/nav_girl"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="@string/menu_girl" />
         </menu>
+
+
     </item>
+
 
 </menu>

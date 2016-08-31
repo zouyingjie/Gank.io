@@ -32,7 +32,7 @@ android {
     }
 
 
-    signingConfigs{
+    signingConfigs {
 
     }
 //    productFlavors{
@@ -67,7 +67,9 @@ dependencies {
     compile dependency['cardview']
     compile dependency['fresco']
     compile dependency['frescoAnimatedGif']
+    compile dependency['glide']
     apt dependency['butterknifeCompiler']
     apt dependency['draggerCompiler']
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha7'
     testCompile 'junit:junit:4.12'
 }

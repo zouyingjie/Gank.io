@@ -1,13 +1,15 @@
 package com.gank.io.zhuangbi;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.bumptech.glide.Glide;
 import com.gank.io.R;
 import com.gank.io.model.ZhuangXImage;
 
@@ -17,7 +19,7 @@ import java.util.List;
  * Created by zouyingjie on 16/8/28.
  */
 
-public class ZhuangXAdapter extends RecyclerView.Adapter<VH> {
+public class ZhuangXAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context context;
     private List<ZhuangXImage> list;
@@ -45,28 +47,34 @@ public class ZhuangXAdapter extends RecyclerView.Adapter<VH> {
     }
 
     @Override
-    public void onBindViewHolder(VH holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ZhuangXImage image = list.get(position);
-        holder.tvDescription.setText(image.description);
-//        Uri uri = Uri.parse(image.image_url.substring(0, image.image_url.length() - 1));
+        ((VH)holder).tvDescription.setText(image.description);
+        Uri uri = Uri.parse(image.image_url.substring(0, image.image_url.length() - 1));
 //        DraweeController controller = Fresco.newDraweeControllerBuilder()
 //                .setUri(uri)
 //                .setAutoPlayAnimations(true)
 //                .build();
 //        holder.ivGirl.setController(controller);
 //        GifImage gifImage = new GifImage();
-        holder.ivGirl.setImageURI(image.image_url);
+        Glide.with(context)
+                .load(uri)
+                .centerCrop()
+                .crossFade()
+                .into(((VH)holder).ivGirl);
+
+    }
+
+    static class VH extends RecyclerView.ViewHolder {
+        ImageView ivGirl;
+        TextView tvDescription;
+        public VH(View itemView) {
+            super(itemView);
+            ivGirl = (ImageView) itemView.findViewById(R.id.iv_girl);
+            tvDescription = (TextView) itemView.findViewById(R.id.tv_girl_description);
+        }
     }
 
 }
 
 
-class VH extends RecyclerView.ViewHolder {
-    SimpleDraweeView ivGirl;
-    TextView tvDescription;
-    public VH(View itemView) {
-        super(itemView);
-        ivGirl = (SimpleDraweeView) itemView.findViewById(R.id.iv_girl);
-        tvDescription = (TextView) itemView.findViewById(R.id.tv_girl_description);
-    }
-}

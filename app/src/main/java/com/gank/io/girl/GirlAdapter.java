@@ -7,9 +7,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.bumptech.glide.Glide;
 import com.gank.io.R;
 import com.gank.io.model.GankGirlItem;
 
@@ -46,7 +47,12 @@ public class GirlAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         GankGirlItem girlItem = girls.get(position);
         Uri uri = Uri.parse(girlItem.imageUrl);
-        ((GirlHolder)holder).ivGirl.setImageURI(uri);
+
+        Glide.with(context)
+                .load(uri)
+                .centerCrop()
+                .crossFade()
+                .into(((GirlHolder)holder).ivGirl);
         ((GirlHolder)holder).tvDescription.setText(girlItem.description);
     }
 
@@ -58,11 +64,11 @@ public class GirlAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
 
     static class GirlHolder extends RecyclerView.ViewHolder{
-        SimpleDraweeView ivGirl;
+        ImageView ivGirl;
         TextView tvDescription;
         public GirlHolder(View itemView) {
             super(itemView);
-            ivGirl = (SimpleDraweeView) itemView.findViewById(R.id.iv_girl);
+            ivGirl = (ImageView) itemView.findViewById(R.id.iv_girl);
             tvDescription = (TextView) itemView.findViewById(R.id.tv_girl_description);
         }
     }

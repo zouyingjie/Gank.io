@@ -16,7 +16,7 @@
         android:padding="4dp"
         android:orientation="vertical">
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/iv_girl"
             android:layout_width="match_parent"
             android:layout_height="160dp"

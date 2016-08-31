@@ -3,8 +3,8 @@ package com.gank.io.zhuangbi;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +47,7 @@ public class ZhuangXFragment extends Fragment implements ZhuangXContract.View{
     }
 
     private void initRootView(){
-        RecyclerView.LayoutManager manager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
+        RecyclerView.LayoutManager manager = new GridLayoutManager(getContext(),2);
         recyclerZhuagnx.setLayoutManager(manager);
         adapter = new ZhuangXAdapter(getContext(), zhuangImages);
         recyclerZhuagnx.setAdapter(adapter);
