@@ -3,7 +3,7 @@ package com.gank.io.zhuangbi;
 import android.support.annotation.NonNull;
 
 import com.gank.io.model.ZhuangXImage;
-import com.gank.io.network.api.Api;
+import com.gank.io.network.api.ApiService;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ public class ZhuangXPresenter implements ZhuangXContract.Presenter {
     }
     @Override
     public void loadImage() {
-        Call<List<ZhuangXImage>> call = Api.getZhuangXApi()
+        Call<List<ZhuangXImage>> call = ApiService.getZhuangXApi()
                 .loadImage("装逼");
         call.enqueue(new Callback<List<ZhuangXImage>>() {
             @Override

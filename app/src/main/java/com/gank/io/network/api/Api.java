@@ -1,46 +1,25 @@
 package com.gank.io.network.api;
 
-import okhttp3.OkHttpClient;
-import retrofit2.CallAdapter;
-import retrofit2.Converter;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
+import com.gank.io.model.GankGirlResult;
+import com.gank.io.model.ZhuangXImage;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
+import rx.Observable;
 
 /**
- * Created by zouyingjie on 16/8/26.
+ * Created by zouyingjie on 16/9/1.
  */
 
-public class Api {
-    private static GankApi gankApi;
-    private static ZhuangXApi zhuangXApi;
-    private static OkHttpClient okHttpClient = new OkHttpClient();
-    private static Converter.Factory gsonConverterFactory = GsonConverterFactory.create();
-    private static CallAdapter.Factory rxJavaCallAdapterFactory = RxJavaCallAdapterFactory.create();
+public interface Api {
+    @GET("data/福利/{number}/{page}")
+    Observable<GankGirlResult> getBeauties(@Path("number") int number, @Path("page") int page);
 
-    public static GankApi getGankApi() {
-        if (gankApi == null) {
-            Retrofit retrofit = new Retrofit.Builder()
-                    .client(okHttpClient)
-                    .baseUrl("http://gank.io/api/")
-                    .addConverterFactory(gsonConverterFactory)
-                    .addCallAdapterFactory(rxJavaCallAdapterFactory)
-                    .build();
-            gankApi = retrofit.create(GankApi.class);
-        }
-        return gankApi;
-    }
-    public static ZhuangXApi getZhuangXApi(){
-        if (zhuangXApi == null){
-            Retrofit retrofit = new Retrofit.Builder()
-                    .client(okHttpClient)
-                    .baseUrl("http://zhuangbi.info/")
-                    .addConverterFactory(gsonConverterFactory)
-                    .build();
-            zhuangXApi = retrofit.create(ZhuangXApi.class);
-
-        }
-
-        return zhuangXApi;
-    }
+    @GET("search")
+    Call<List<ZhuangXImage>> loadImage(@Query("q") String query);
 }
+

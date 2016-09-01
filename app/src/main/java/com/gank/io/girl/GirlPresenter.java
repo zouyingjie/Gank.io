@@ -4,7 +4,7 @@ import android.support.annotation.Nullable;
 import android.widget.Toast;
 
 import com.gank.io.model.GankGirlItem;
-import com.gank.io.network.api.Api;
+import com.gank.io.network.api.ApiService;
 import com.gank.io.util.GankBeautyResultToItemsMapper;
 
 import java.util.List;
@@ -51,7 +51,7 @@ public class GirlPresenter implements GirlContract.Presenter {
     public void loadImage() {
         unsubscribe();
         girlView.startRefresh();
-        subscription = Api.getGankApi()
+        subscription = ApiService.getGankApi()
                 .getBeauties(10, page++)
                 .map(GankBeautyResultToItemsMapper.getInstance())
                 .subscribeOn(Schedulers.io())

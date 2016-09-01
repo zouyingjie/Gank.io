@@ -13,7 +13,8 @@
     </group>
 
 
-    <item>
+    <item
+        android:title="@string/menu_title_image">
         <menu>
             <item
                 android:id="@+id/nav_zhuang_x"

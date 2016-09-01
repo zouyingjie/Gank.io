@@ -1,7 +1,6 @@
 package com.gank.io.zhuangbi;
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,19 +49,21 @@ public class ZhuangXAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ZhuangXImage image = list.get(position);
         ((VH)holder).tvDescription.setText(image.description);
-        Uri uri = Uri.parse(image.image_url.substring(0, image.image_url.length() - 1));
-//        DraweeController controller = Fresco.newDraweeControllerBuilder()
-//                .setUri(uri)
-//                .setAutoPlayAnimations(true)
-//                .build();
-//        holder.ivGirl.setController(controller);
-//        GifImage gifImage = new GifImage();
-        Glide.with(context)
-                .load(uri)
-                .centerCrop()
-                .crossFade()
-                .into(((VH)holder).ivGirl);
-
+        String uri = image.image_url.substring(0, image.image_url.length() - 1);
+        if (image.image_url.endsWith("gif")){
+            Glide.with(context)
+                    .load(image.image_url)
+                    .asGif()
+                    .centerCrop()
+                    .crossFade()
+                    .into(((VH)holder).ivGirl);
+        }else {
+            Glide.with(context)
+                    .load(image.image_url)
+                    .centerCrop()
+                    .crossFade()
+                    .into(((VH)holder).ivGirl);
+        }
     }
 
     static class VH extends RecyclerView.ViewHolder {
