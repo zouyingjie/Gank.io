@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.gank.io.R;
 import com.gank.io.model.ZhuangXImage;
+import com.gank.io.util.ImageUtils;
 
 import java.util.List;
 
@@ -49,20 +49,12 @@ public class ZhuangXAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ZhuangXImage image = list.get(position);
         ((VH)holder).tvDescription.setText(image.description);
-        String uri = image.image_url.substring(0, image.image_url.length() - 1);
-        if (image.image_url.endsWith("gif")){
-            Glide.with(context)
-                    .load(image.image_url)
-                    .asGif()
-                    .centerCrop()
-                    .crossFade()
-                    .into(((VH)holder).ivGirl);
+        if (ImageUtils.isGif(image.image_url)){
+            ImageUtils.loadGifWithPlaceholder(context, image.image_url, ((VH)holder).ivGirl,
+                    context.getResources().getDrawable(R.drawable.ic_menu_camera));
         }else {
-            Glide.with(context)
-                    .load(image.image_url)
-                    .centerCrop()
-                    .crossFade()
-                    .into(((VH)holder).ivGirl);
+            ImageUtils.loadImageWithPlaceholder(context, image.image_url, ((VH)holder).ivGirl,
+                    context.getResources().getDrawable(R.drawable.ic_menu_camera));
         }
     }
 

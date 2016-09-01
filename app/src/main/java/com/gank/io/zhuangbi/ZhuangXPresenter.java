@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.gank.io.model.ZhuangXImage;
 import com.gank.io.network.api.ApiService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -32,7 +33,16 @@ public class ZhuangXPresenter implements ZhuangXContract.Presenter {
             @Override
             public void onResponse(Call<List<ZhuangXImage>> call, Response<List<ZhuangXImage>> response) {
                 List<ZhuangXImage> zhuangXImages = response.body();
-                zhuagnxView.refreshImages(zhuangXImages);
+                List<ZhuangXImage> imageDatas = new ArrayList<ZhuangXImage>();
+                //只显示jpg、png和gif三种格式的图片
+                for (ZhuangXImage image:zhuangXImages){
+                    if (image.image_url.contains(".jpg")
+                            ||image.image_url.contains(".png")
+                          ||image.image_url.contains(".gif")){
+                        imageDatas.add(image);
+                    }
+                }
+                zhuagnxView.refreshImages(imageDatas);
             }
 
             @Override
