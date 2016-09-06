@@ -1,8 +1,8 @@
 package com.gank.io.girl;
 
-import com.gank.io.BasePresenter;
-import com.gank.io.BaseView;
-import com.gank.io.model.GankGirlItem;
+import com.gank.io.base.BasePresenter;
+import com.gank.io.base.BaseView;
+import com.gank.io.model.gank.GankGirlItem;
 
 import java.util.List;
 

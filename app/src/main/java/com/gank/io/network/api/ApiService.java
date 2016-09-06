@@ -14,6 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiService {
     private static Api gankApi;
     private static Api zhuangXApi;
+    private static Api gankDayApi;
     private static OkHttpClient okHttpClient = new OkHttpClient();
     private static Converter.Factory gsonConverterFactory = GsonConverterFactory.create();
     private static CallAdapter.Factory rxJavaCallAdapterFactory = RxJavaCallAdapterFactory.create();
@@ -51,5 +52,22 @@ public class ApiService {
         }
 
         return zhuangXApi;
+    }
+
+    /**
+     * 获取今日数据
+     */
+
+    public static Api getGankDayApi(){
+        if (gankDayApi == null){
+            Retrofit retrofit = new Retrofit.Builder()
+                    .client(okHttpClient)
+                    .baseUrl("http://gank.io/api/")
+                    .addConverterFactory(gsonConverterFactory)
+                    .addCallAdapterFactory(rxJavaCallAdapterFactory)
+                    .build();
+            gankDayApi = retrofit.create(Api.class);
+        }
+        return gankDayApi;
     }
 }

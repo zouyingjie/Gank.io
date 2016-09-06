@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="@dimen/bottom_sheet_grid_image_height"
+            android:layout_height="@dimen/bottom_sheet_grid_image_height"
+            android:layout_gravity="center_horizontal"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_wechat" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/bottom_sheet_grid_title_height"
+            android:gravity="center_horizontal"
+            android:text="微信好友"
+            android:textColor="@color/colorAccent"
+            android:textSize="8sp" />
+    </LinearLayout>
+</FrameLayout>

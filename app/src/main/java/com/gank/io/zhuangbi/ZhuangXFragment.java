@@ -81,4 +81,9 @@ public class ZhuangXFragment extends Fragment implements ZhuangXContract.View{
     public void setPresenter(ZhuangXContract.Presenter presenter) {
         this.presenter = presenter;
     }
+
+    @Override
+    public void removePresenter() {
+        presenter = null;
+    }
 }

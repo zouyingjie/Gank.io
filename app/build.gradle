@@ -65,8 +65,6 @@ dependencies {
     compile dependency['dagger']
     compile dependency['annotation']
     compile dependency['cardview']
-    compile dependency['fresco']
-    compile dependency['frescoAnimatedGif']
     compile dependency['glide']
     apt dependency['butterknifeCompiler']
     apt dependency['draggerCompiler']

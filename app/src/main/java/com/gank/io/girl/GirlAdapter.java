@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.gank.io.R;
-import com.gank.io.model.GankGirlItem;
+import com.gank.io.model.gank.GankGirlItem;
 
 import java.util.ArrayList;
 import java.util.List;

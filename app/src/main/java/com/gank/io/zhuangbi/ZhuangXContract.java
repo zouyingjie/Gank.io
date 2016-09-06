@@ -1,7 +1,7 @@
 package com.gank.io.zhuangbi;
 
-import com.gank.io.BasePresenter;
-import com.gank.io.BaseView;
+import com.gank.io.base.BasePresenter;
+import com.gank.io.base.BaseView;
 import com.gank.io.model.ZhuangXImage;
 
 import java.util.List;

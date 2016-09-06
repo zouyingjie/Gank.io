@@ -2,6 +2,7 @@ package com.gank.io.network.api;
 
 import com.gank.io.model.GankGirlResult;
 import com.gank.io.model.ZhuangXImage;
+import com.gank.io.model.gank.GankDayData;
 
 import java.util.List;
 
@@ -21,5 +22,8 @@ public interface Api {
 
     @GET("search")
     Call<List<ZhuangXImage>> loadImage(@Query("q") String query);
+
+    @GET("day/{date}")
+    Observable<GankDayData> getDayData(@Path("date")String date);
 }
 

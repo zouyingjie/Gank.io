@@ -48,10 +48,10 @@ public class ImageUtils {
     }
 
     public static boolean isGif(String uri){
-        if (uri.contains(".jpg?") || uri.contains(".png")){
-            return false;
-        }else {
+        if (uri.contains(".gif")){
             return true;
+        }else {
+            return false;
         }
     }
 }

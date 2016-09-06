@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.gank.io.R;
-import com.gank.io.model.GankGirlItem;
+import com.gank.io.model.gank.GankGirlItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,6 +116,11 @@ public class GirlFragment extends Fragment implements GirlContract.View, View.On
     @Override
     public void setPresenter(GirlContract.Presenter presenter) {
         this.presenter = (GirlPresenter) presenter;
+    }
+
+    @Override
+    public void removePresenter() {
+        presenter = null;
     }
 
     @Override

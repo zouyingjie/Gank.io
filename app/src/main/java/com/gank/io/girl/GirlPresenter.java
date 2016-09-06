@@ -3,7 +3,7 @@ package com.gank.io.girl;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
 
-import com.gank.io.model.GankGirlItem;
+import com.gank.io.model.gank.GankGirlItem;
 import com.gank.io.network.api.ApiService;
 import com.gank.io.util.GankBeautyResultToItemsMapper;
 
