@@ -14,8 +14,8 @@ public class GirlContract {
 
     interface View extends BaseView<Presenter> {
 
-        void startRefresh();
-        void endRefresh();
+        void startPullRefresh();
+        void endPullRefresh();
         void refreshImages(List<GankGirlItem> images);
 
     }
@@ -32,6 +32,7 @@ public class GirlContract {
     interface Presenter extends BasePresenter{
 
         void loadImage();
+
 
         void unsubscribe();
     }

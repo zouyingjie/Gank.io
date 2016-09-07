@@ -11,4 +11,10 @@
     <dimen name="bottom_sheet_grid_horizontal_padding">24dp</dimen>
     <dimen name="bottom_sheet_grid_image_height">48dp</dimen>
     <dimen name="bottom_sheet_grid_title_height">16dp</dimen>
+    <dimen name="bottom_sheet_grid_title_text_size">8sp</dimen>
+
+    <!--Today Gank List-->
+    <dimen name="today_gank_list_item_padding">8dp</dimen>
+    <dimen name="today_gank_list_image_width">24dp</dimen>
+    <dimen name="today_gank_list_content_text_size">18sp</dimen>
 </resources>

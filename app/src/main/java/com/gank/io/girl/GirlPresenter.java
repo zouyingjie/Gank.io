@@ -4,7 +4,7 @@ import android.support.annotation.Nullable;
 import android.widget.Toast;
 
 import com.gank.io.model.gank.GankGirlItem;
-import com.gank.io.network.api.ApiService;
+import com.gank.io.network.ApiService;
 import com.gank.io.util.GankBeautyResultToItemsMapper;
 
 import java.util.List;
@@ -20,24 +20,26 @@ import rx.schedulers.Schedulers;
 
 public class GirlPresenter implements GirlContract.Presenter {
     private GirlContract.View girlView;
-    private int page = 0;
+    private int page = 1;
     private Subscription subscription;
 
     Observer<List<GankGirlItem>> observer = new Observer<List<GankGirlItem>>() {
         @Override
         public void onCompleted() {
+            girlView.endPullRefresh();
             Toast.makeText(((GirlFragment) girlView).getContext(), "Completed", Toast.LENGTH_LONG).show();
         }
 
         @Override
         public void onError(Throwable e) {
-            girlView.endRefresh();
+            girlView.endPullRefresh();
             Toast.makeText(((GirlFragment) girlView).getContext(), e.toString(), Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onNext(List<GankGirlItem> images) {
-            girlView.endRefresh();
+            girlView.endPullRefresh();
+
             girlView.refreshImages(images);
         }
     };
@@ -50,9 +52,10 @@ public class GirlPresenter implements GirlContract.Presenter {
     @Override
     public void loadImage() {
         unsubscribe();
-        girlView.startRefresh();
-        subscription = ApiService.getGankApi()
-                .getBeauties(10, page++)
+        girlView.startPullRefresh();
+
+        subscription = ApiService.getGankGirlApi()
+                .getGirls(10, page++)
                 .map(GankBeautyResultToItemsMapper.getInstance())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -60,7 +63,8 @@ public class GirlPresenter implements GirlContract.Presenter {
     }
 
     @Override
-    public void start() {}
+    public void start() {
+    }
 
     @Override
     public void unsubscribe() {

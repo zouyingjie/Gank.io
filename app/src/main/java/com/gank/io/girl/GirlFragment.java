@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.gank.io.R;
 import com.gank.io.model.gank.GankGirlItem;
@@ -22,13 +23,11 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import rx.Subscription;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class GirlFragment extends Fragment implements GirlContract.View, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
-    protected Subscription subscription;
+public class GirlFragment extends Fragment implements GirlContract.View, SwipeRefreshLayout.OnRefreshListener {
 
     private GirlPresenter presenter;
 
@@ -36,11 +35,13 @@ public class GirlFragment extends Fragment implements GirlContract.View, View.On
     RecyclerView recyclerGirl;
     @BindView(R.id.swipe_girl)
     SwipeRefreshLayout swipeGirl;
+    @BindView(R.id.bar_gril)
+    ProgressBar barGirl;
 
     @Inject GirlAdapter adapter;
+
     private ArrayList<GankGirlItem> girls = new ArrayList<GankGirlItem>();
 
-    private int page = 0;
 
     public GirlFragment() {
         // Required empty public constructor
@@ -51,7 +52,6 @@ public class GirlFragment extends Fragment implements GirlContract.View, View.On
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View root =  inflater.inflate(R.layout.fragment_blank, container, false);
         ButterKnife.bind(this, root);
         initRootView();
@@ -68,13 +68,15 @@ public class GirlFragment extends Fragment implements GirlContract.View, View.On
     private void initRootView(){
         swipeGirl.setColorSchemeColors(Color.BLUE, Color.GREEN, Color.RED, Color.YELLOW);
         swipeGirl.setEnabled(false);
-        swipeGirl.setOnRefreshListener(this);
+//        swipeGirl.setOnRefreshListener(this);
 
 
         adapter = new GirlAdapter(getContext(), girls);
         final GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         recyclerGirl.setLayoutManager(layoutManager);
         recyclerGirl.setAdapter(adapter);
+//        View footView = LayoutInflater.from(getContext()).inflate(R.layout.layout_recycler_footer, null);
+//        recyclerGirl.addView(footView, adapter.getItemCount());
         recyclerGirl.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -97,15 +99,16 @@ public class GirlFragment extends Fragment implements GirlContract.View, View.On
 
 
     @Override
-    public void startRefresh() {
+    public void startPullRefresh() {
         swipeGirl.setEnabled(true);
         swipeGirl.setRefreshing(true);
     }
 
     @Override
-    public void endRefresh() {
+    public void endPullRefresh() {
         swipeGirl.setRefreshing(false);
     }
+
 
     @Override
     public void refreshImages(List<GankGirlItem> images) {
@@ -129,10 +132,6 @@ public class GirlFragment extends Fragment implements GirlContract.View, View.On
         presenter.unsubscribe();
     }
 
-    @Override
-    public void onClick(View v) {
-//       presenter.loadImage();
-    }
 
     @Override
     public void onRefresh() {

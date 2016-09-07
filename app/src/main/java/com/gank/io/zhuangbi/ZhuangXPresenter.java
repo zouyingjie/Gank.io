@@ -3,7 +3,7 @@ package com.gank.io.zhuangbi;
 import android.support.annotation.NonNull;
 
 import com.gank.io.model.ZhuangXImage;
-import com.gank.io.network.api.ApiService;
+import com.gank.io.network.ApiService;
 
 import java.util.ArrayList;
 import java.util.List;

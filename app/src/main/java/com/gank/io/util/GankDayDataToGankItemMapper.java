@@ -24,7 +24,9 @@ public class GankDayDataToGankItemMapper implements Func1<GankDayData, List<Gank
     public static GankDayDataToGankItemMapper getInstance() {
         return INSTANCE;
     }
+
     public List<GankDayItem> call(GankDayData dayData) {
+
         GankDayData.Result result = dayData.results;
         List<GankDayItem> ganks = new ArrayList<>(10);
 
