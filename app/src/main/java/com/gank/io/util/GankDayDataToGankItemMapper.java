@@ -65,6 +65,9 @@ public class GankDayDataToGankItemMapper implements Func1<GankDayData, List<Gank
             ganks.addAll(GankDayContentItem.items(result.videoList));
         }
 
+        if (result.welfareList != null && result.welfareList.size() > 0){
+            ganks.addAll(GankDayContentItem.items(result.welfareList));
+        }
         return ganks;
     }
 }

@@ -73,6 +73,11 @@ public class TodayGankFragment  extends Fragment implements TodayContract.View {
     }
 
     @Override
+    public void setTodayGirl(String url) {
+
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         presenter.unsubscribe();

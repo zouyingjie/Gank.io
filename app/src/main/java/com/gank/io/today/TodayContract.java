@@ -22,5 +22,6 @@ public class TodayContract {
     public interface View extends BaseView<Presenter>{
 
         void loadTodayGankData(List<GankDayItem> gankDayItems);
+        void setTodayGirl(String url);
     }
 }

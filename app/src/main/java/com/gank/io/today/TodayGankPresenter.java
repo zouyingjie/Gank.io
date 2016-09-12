@@ -2,6 +2,7 @@ package com.gank.io.today;
 
 import android.support.annotation.NonNull;
 
+import com.gank.io.model.gank.GankDayContentItem;
 import com.gank.io.model.gank.GankDayData;
 import com.gank.io.model.gank.GankDayItem;
 import com.gank.io.network.ApiService;
@@ -36,6 +37,9 @@ public class TodayGankPresenter implements TodayContract.Presenter {
 
         @Override
         public void onNext(List<GankDayItem> gankDayItems) {
+
+
+            todayGankView.setTodayGirl(((GankDayContentItem)gankDayItems.remove(gankDayItems.size()-1)).url);
             todayGankView.loadTodayGankData(gankDayItems);
         }
     };
@@ -55,20 +59,24 @@ public class TodayGankPresenter implements TodayContract.Presenter {
     @Override
     public void loadTodayGankData() {
         unsubscribe();
-        ApiService.getDayApi().getDay()
-                .map(new Func1<GankDate, Calendar>() {
-                    @Override
-                    public Calendar call(GankDate gankDate) {
-                        return getLastDate(gankDate);
-                    }
-                })
-                .flatMap(new Func1<Calendar, Observable<GankDayData>>() {
-                    @Override
-                    public Observable<GankDayData> call(Calendar c) {
-                        return getGankDayData(c);
 
-                    }
-                }).map(GankDayDataToGankItemMapper.getInstance())
+        Func1<GankDate, Calendar> func1 = new Func1<GankDate, Calendar>() {
+            @Override
+            public Calendar call(GankDate gankDate) {
+                return getLastDate(gankDate);
+            }
+        };
+
+        Func1<Calendar,Observable<GankDayData>> func2 = new Func1<Calendar, Observable<GankDayData>>() {
+            @Override
+            public Observable<GankDayData> call(Calendar calendar) {
+                return getGankDayData(calendar);
+            }
+        };
+        ApiService.getDayApi().getDay()
+                .map(func1)
+                .flatMap(func2)
+                .map(GankDayDataToGankItemMapper.getInstance())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);

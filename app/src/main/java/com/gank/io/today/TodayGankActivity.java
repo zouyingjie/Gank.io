@@ -1,12 +1,13 @@
 package com.gank.io.today;
 
+import android.Manifest;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.support.annotation.IdRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -17,55 +18,43 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.gank.io.R;
 import com.gank.io.TestFragment;
 import com.gank.io.girl.GirlActivity;
+import com.gank.io.model.gank.GankDayContentItem;
+import com.gank.io.model.gank.GankDayItem;
 import com.gank.io.zhuangbi.ZhuangXActivity;
-import com.roughike.bottombar.BottomBar;
-import com.roughike.bottombar.OnTabSelectListener;
 import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 
+import java.util.List;
+
 public class TodayGankActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
-
-
-
-    private RecyclerView todayGank;
+        implements NavigationView.OnNavigationItemSelectedListener, TodayContract.View{
+    private RecyclerView recyclerToadyGank;
+    private TodayContract.Presenter presenter;
+    private TodayGankAdapter adapter;
+    private ImageView ivTodayGril;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        String[] mPermissionList = new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.CALL_PHONE,Manifest.permission.READ_LOGS,Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.SET_DEBUG_APP,Manifest.permission.SYSTEM_ALERT_WINDOW,Manifest.permission.GET_ACCOUNTS};
-//        ActivityCompat.requestPermissions(TodayGankActivity.this,mPermissionList, 100);
+        String[] mPermissionList = new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.CALL_PHONE,Manifest.permission.READ_LOGS,Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.SET_DEBUG_APP,Manifest.permission.SYSTEM_ALERT_WINDOW,Manifest.permission.GET_ACCOUNTS};
+        ActivityCompat.requestPermissions(TodayGankActivity.this,mPermissionList, 100);
         final Toolbar toolbar =  (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Gank.io");
 
-        BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
-        bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
-            @Override
-            public void onTabSelected(@IdRes int tabId) {
-                switch (tabId){
-                    case R.id.tab_favorites:
-                        initGankViewAndPresenter();
-                        break;
-                    case R.id.tab_friends:
-                        initTestFragment();
-                        break;
-                    case R.id.tab_nearby:
-                        initTestFragment();
-
-                        break;
-                }
-
-            }
-        });
-
+        recyclerToadyGank = (RecyclerView) findViewById(R.id.recycler_today_gank);
+        ivTodayGril = (ImageView) findViewById(R.id.iv_today_girl);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -84,16 +73,29 @@ public class TodayGankActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        initGankViewAndPresenter();
+        adapter = new TodayGankAdapter();
+        recyclerToadyGank.setAdapter(adapter);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        recyclerToadyGank.setLayoutManager(linearLayoutManager);
+        adapter.setOnItemClickListener(new TodayGankAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(GankDayContentItem item) {
+                Intent intent = new Intent(TodayGankActivity.this, GankDetailActivity.class);
+                intent.putExtra("GANK_URL",item.url);
+                startActivity(intent);
+            }
+        });
+        this.presenter = new TodayGankPresenter(this);
+        presenter.loadTodayGankData();
 
     }
 
-    private void initGankViewAndPresenter(){
-        TodayGankFragment fragment = new TodayGankFragment();
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fl_today_gank_content, fragment)
-                .commit();
-        new TodayGankPresenter(fragment);
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        presenter.loadTodayGankData();
     }
 
     private void initTestFragment(){
@@ -101,18 +103,10 @@ public class TodayGankActivity extends AppCompatActivity
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fl_today_gank_content, fragment)
                 .commit();
+
     }
 
     private void showShareDialog() {
-//        BottomSheetDialog dialog = new BottomSheetDialog(this);
-//        View view = LayoutInflater.from(this).inflate(R.layout.layout_share_bottom_sheet, null);
-//        RecyclerView recyclerBottomSheet = (RecyclerView) view.findViewById(R.id.recycler_share);
-//        dialog.setContentView(view);
-//        dialog.setTitle("分享到");
-//        GridLayoutManager manager = new GridLayoutManager(this, 3);
-//        recyclerBottomSheet.setLayoutManager(manager);
-//        recyclerBottomSheet.setAdapter(new ShareAdpater(this));
-//        dialog.show();
         UMImage image = new UMImage(TodayGankActivity.this, "http://www.umeng.com/images/pic/social/integrated_3.png");
         UMShareListener listener = new UMShareListener() {
             @Override
@@ -201,6 +195,29 @@ public class TodayGankActivity extends AppCompatActivity
         return true;
     }
 
+    @Override
+    public void loadTodayGankData(List<GankDayItem> gankDayItems) {
+        adapter.setData(gankDayItems);
+    }
+
+    @Override
+    public void setTodayGirl(String url) {
+        Glide.with(this)
+                .load(url)
+                .crossFade()
+                .into(ivTodayGril);
+    }
+
+    @Override
+    public void setPresenter(TodayContract.Presenter presenter) {
+       this.presenter = presenter;
+    }
+
+    @Override
+    public void removePresenter() {
+        this.presenter = null;
+    }
+
 
     class GankDecoration extends RecyclerView.ItemDecoration {
         @Override
@@ -238,6 +255,10 @@ public class TodayGankActivity extends AppCompatActivity
         }
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get( this ).onActivityResult( requestCode, resultCode, data);
+    }
 
 }
