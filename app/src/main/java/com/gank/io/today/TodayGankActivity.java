@@ -25,10 +25,9 @@ import com.bumptech.glide.Glide;
 import com.gank.io.R;
 import com.gank.io.TestFragment;
 import com.gank.io.girl.GirlActivity;
-import com.gank.io.model.gank.GankCategory;
 import com.gank.io.model.gank.GankDayContentItem;
 import com.gank.io.model.gank.GankDayItem;
-import com.gank.io.network.ApiService;
+import com.gank.io.model.gank.GankResourceType;
 import com.gank.io.zhuangbi.ZhuangXActivity;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareAPI;
@@ -37,10 +36,6 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 
 import java.util.List;
-
-import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 public class TodayGankActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, TodayContract.View {
@@ -184,33 +179,58 @@ public class TodayGankActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
+        Intent intent = new Intent();
+      ;
         if (id == R.id.nav_zhuang_x) {
-            Intent intent = new Intent(this, ZhuangXActivity.class);
+//            Intent intent = new Intent(this, ZhuangXActivity.class);
+            intent.setClass(this, ZhuangXActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_girl) {
-            Intent intent = new Intent(this, GirlActivity.class);
+//            Intent intent = new Intent(this, GirlActivity.class);
+            intent.setClass(this, GirlActivity.class);
             startActivity(intent);
         }else if (id == R.id.nav_android){
-            ApiService.getGankCategoryApi().getCategory("Android", "10")
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Observer<GankCategory>() {
-                        @Override
-                        public void onCompleted() {
-                            Toast.makeText(getApplicationContext(), "Completed", Toast.LENGTH_SHORT).show();
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            Toast.makeText(getApplicationContext(), "ERROR", Toast.LENGTH_SHORT).show();
-                        }
-
-                        @Override
-                        public void onNext(GankCategory gankCategory) {
-                            Toast.makeText(getApplicationContext(), gankCategory.error+"eee", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+            intent.setClass(this, GankCategoryActivity.class);
+            intent.putExtra("TITLE", GankResourceType.ANDROID);
+            startActivity(intent);
+//            ApiService.getGankCategoryApi().getCategory("Android", "10")
+//                    .subscribeOn(Schedulers.io())
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .subscribe(new Observer<GankCategory>() {
+//                        @Override
+//                        public void onCompleted() {
+//                            Toast.makeText(getApplicationContext(), "Completed", Toast.LENGTH_SHORT).show();
+//                        }
+//
+//                        @Override
+//                        public void onError(Throwable e) {
+//                            Toast.makeText(getApplicationContext(), "ERROR", Toast.LENGTH_SHORT).show();
+//                        }
+//
+//                        @Override
+//                        public void onNext(GankCategory gankCategory) {
+//                            Toast.makeText(getApplicationContext(), gankCategory.error+"eee", Toast.LENGTH_SHORT).show();
+//                        }
+//                    });
+        }else if (id == R.id.nav_ios){
+            intent.setClass(this, GankCategoryActivity.class);
+            intent.putExtra("TITLE", GankResourceType.IOS);
+            startActivity(intent);
+        }
+        else if (id == R.id.nav_html){
+            intent.setClass(this, GankCategoryActivity.class);
+            intent.putExtra("TITLE", GankResourceType.FRONTEND);
+            startActivity(intent);
+        }
+        else if (id == R.id.nav_video){
+            intent.setClass(this, GankCategoryActivity.class);
+            intent.putExtra("TITLE", GankResourceType.VIDEO);
+            startActivity(intent);
+        }
+        else if (id == R.id.nav_extral){
+            intent.setClass(this, GankCategoryActivity.class);
+            intent.putExtra("TITLE", GankResourceType.EXTRA);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
