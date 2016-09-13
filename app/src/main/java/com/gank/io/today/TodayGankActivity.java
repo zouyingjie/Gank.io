@@ -25,8 +25,10 @@ import com.bumptech.glide.Glide;
 import com.gank.io.R;
 import com.gank.io.TestFragment;
 import com.gank.io.girl.GirlActivity;
+import com.gank.io.model.gank.GankCategory;
 import com.gank.io.model.gank.GankDayContentItem;
 import com.gank.io.model.gank.GankDayItem;
+import com.gank.io.network.ApiService;
 import com.gank.io.zhuangbi.ZhuangXActivity;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareAPI;
@@ -36,8 +38,12 @@ import com.umeng.socialize.media.UMImage;
 
 import java.util.List;
 
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
 public class TodayGankActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, TodayContract.View{
+        implements NavigationView.OnNavigationItemSelectedListener, TodayContract.View {
     private RecyclerView recyclerToadyGank;
     private TodayContract.Presenter presenter;
     private TodayGankAdapter adapter;
@@ -47,9 +53,9 @@ public class TodayGankActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        String[] mPermissionList = new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.CALL_PHONE,Manifest.permission.READ_LOGS,Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.SET_DEBUG_APP,Manifest.permission.SYSTEM_ALERT_WINDOW,Manifest.permission.GET_ACCOUNTS};
-        ActivityCompat.requestPermissions(TodayGankActivity.this,mPermissionList, 100);
-        final Toolbar toolbar =  (Toolbar) findViewById(R.id.toolbar);
+        String[] mPermissionList = new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.CALL_PHONE, Manifest.permission.READ_LOGS, Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.SET_DEBUG_APP, Manifest.permission.SYSTEM_ALERT_WINDOW, Manifest.permission.GET_ACCOUNTS};
+        ActivityCompat.requestPermissions(TodayGankActivity.this, mPermissionList, 100);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Gank.io");
 
@@ -81,15 +87,14 @@ public class TodayGankActivity extends AppCompatActivity
             @Override
             public void onItemClick(GankDayContentItem item) {
                 Intent intent = new Intent(TodayGankActivity.this, GankDetailActivity.class);
-                intent.putExtra("GANK_URL",item.url);
+                intent.putExtra("GANK_URL", item.url);
                 startActivity(intent);
             }
         });
-        this.presenter = new TodayGankPresenter(this);
+        this.presenter = TodayGankPresenter.getInstance(this);
         presenter.loadTodayGankData();
 
     }
-
 
 
     @Override
@@ -98,7 +103,7 @@ public class TodayGankActivity extends AppCompatActivity
         presenter.loadTodayGankData();
     }
 
-    private void initTestFragment(){
+    private void initTestFragment() {
         TestFragment fragment = new TestFragment();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fl_today_gank_content, fragment)
@@ -127,20 +132,19 @@ public class TodayGankActivity extends AppCompatActivity
 
         final SHARE_MEDIA[] displaylist = new SHARE_MEDIA[]
                 {
-                        SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE,SHARE_MEDIA.SINA,
-                        SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE,SHARE_MEDIA.DOUBAN
+                        SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.SINA,
+                        SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE, SHARE_MEDIA.DOUBAN
                 };
-        new ShareAction(this).setDisplayList( displaylist )
-                .withText( "呵呵" )
+        new ShareAction(this).setDisplayList(displaylist)
+                .withText("呵呵")
                 .withTitle("title")
                 .withTargetUrl("http://www.baidu.com")
-                .withMedia( image )
+                .withMedia(image)
                 .setListenerList(listener)
                 .open();
 
 
     }
-
 
 
     @Override
@@ -187,7 +191,26 @@ public class TodayGankActivity extends AppCompatActivity
         } else if (id == R.id.nav_girl) {
             Intent intent = new Intent(this, GirlActivity.class);
             startActivity(intent);
+        }else if (id == R.id.nav_android){
+            ApiService.getGankCategoryApi().getCategory("Android", "10")
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<GankCategory>() {
+                        @Override
+                        public void onCompleted() {
+                            Toast.makeText(getApplicationContext(), "Completed", Toast.LENGTH_SHORT).show();
+                        }
 
+                        @Override
+                        public void onError(Throwable e) {
+                            Toast.makeText(getApplicationContext(), "ERROR", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onNext(GankCategory gankCategory) {
+                            Toast.makeText(getApplicationContext(), gankCategory.error+"eee", Toast.LENGTH_SHORT).show();
+                        }
+                    });
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -208,9 +231,10 @@ public class TodayGankActivity extends AppCompatActivity
                 .into(ivTodayGril);
     }
 
+
     @Override
     public void setPresenter(TodayContract.Presenter presenter) {
-       this.presenter = presenter;
+        this.presenter = presenter;
     }
 
     @Override
@@ -227,30 +251,30 @@ public class TodayGankActivity extends AppCompatActivity
             paint.setColor(getResources().getColor(R.color.colorAccent));
             paint.setAntiAlias(true);
             RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
-            if (layoutManager instanceof LinearLayoutManager){
-                for (int i = 0; i < state.getItemCount(); i ++){
+            if (layoutManager instanceof LinearLayoutManager) {
+                for (int i = 0; i < state.getItemCount(); i++) {
                     View view = parent.getChildAt(i);
-                    c.drawRect(parent.getLeft(),getTop(parent, i), parent.getRight(),getButtom(parent, i),
-                           paint);
+                    c.drawRect(parent.getLeft(), getTop(parent, i), parent.getRight(), getButtom(parent, i),
+                            paint);
                 }
 
             }
 //            c.drawRect();
         }
 
-        private int getTop(RecyclerView parent, int index){
+        private int getTop(RecyclerView parent, int index) {
             int top = 0;
-            for(int i = 0; i < index; i ++){
+            for (int i = 0; i < index; i++) {
                 top = top + parent.getChildAt(i).getHeight();
             }
-            if(index > 0){
-                top += 4*(index-1);
+            if (index > 0) {
+                top += 4 * (index - 1);
             }
             return top;
 
         }
 
-        private int getButtom(RecyclerView parent, int index){
+        private int getButtom(RecyclerView parent, int index) {
             return getTop(parent, index) + 4;
         }
     }
@@ -258,7 +282,7 @@ public class TodayGankActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        UMShareAPI.get( this ).onActivityResult( requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
     }
 
 }

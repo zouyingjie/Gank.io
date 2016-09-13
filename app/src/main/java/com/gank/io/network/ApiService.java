@@ -1,5 +1,6 @@
 package com.gank.io.network;
 
+import com.gank.io.network.api.GankCategoryApi;
 import com.gank.io.network.api.GankDateApi;
 import com.gank.io.network.api.GankDayApi;
 import com.gank.io.network.api.GankGirlApi;
@@ -17,6 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class ApiService {
+    private static GankCategoryApi gankCategoryApi;
     private static GankGirlApi gankGirlApi;
     private static ZhuangImageApi zhuangXApi;
     private static GankDayApi gankDayApi;
@@ -27,6 +29,7 @@ public class ApiService {
 
     /**
      * 获取Gank妹子图片
+     *
      * @return
      */
     public static GankGirlApi getGankGirlApi() {
@@ -35,19 +38,21 @@ public class ApiService {
                     .client(okHttpClient)
                     .baseUrl("http://gank.io/api/")
                     .addConverterFactory(gsonConverterFactory)
-                    .addCallAdapterFactory(rxJavaCallAdapterFactory)
+                    .addCallAdapterFactory(rxJavaCallAdapterFactory)//设置CallAdapter
+                    //这里设置的是RxJavaCallAdapter。。。默认是ExecutorCallAdapterFactory,返回的是默认的call
                     .build();
-            gankGirlApi = retrofit.create(GankGirlApi.class);
+            gankGirlApi = retrofit.create(GankGirlApi.class);//创建类
         }
         return gankGirlApi;
     }
 
     /**
      * 获取装X大全图片
+     *
      * @return
      */
-    public static ZhuangImageApi getZhuangXApi(){
-        if (zhuangXApi == null){
+    public static ZhuangImageApi getZhuangXApi() {
+        if (zhuangXApi == null) {
             Retrofit retrofit = new Retrofit.Builder()
                     .client(okHttpClient)
                     .baseUrl("http://zhuangbi.info/")
@@ -64,8 +69,8 @@ public class ApiService {
      * 获取今日数据
      */
 
-    public static GankDayApi getGankDayApi(){
-        if (gankDayApi == null){
+    public static GankDayApi getGankDayApi() {
+        if (gankDayApi == null) {
             Retrofit retrofit = new Retrofit.Builder()
                     .client(okHttpClient)
                     .baseUrl("http://gank.io/api/")
@@ -81,16 +86,29 @@ public class ApiService {
      * 获取发布过的日期
      */
 
-    public static GankDateApi getDayApi(){
-        if (gankDateApi == null){
-            Retrofit retrofit = new Retrofit.Builder()
-                    .client(okHttpClient)
-                    .baseUrl("http://gank.io/api/")
-                    .addConverterFactory(gsonConverterFactory)
+    public static GankDateApi getDayApi() {
+        if (gankDateApi == null) {
+            Retrofit retrofit = new Retrofit.Builder()//初始化的时候确定系统平台
+                    .client(okHttpClient)//设置Http客户端
+                    .baseUrl("http://gank.io/api/")//设置访问的基本url
+                    .addConverterFactory(gsonConverterFactory)//设置数据类型转化类:gson
                     .addCallAdapterFactory(rxJavaCallAdapterFactory)
                     .build();
             gankDateApi = retrofit.create(GankDateApi.class);
         }
         return gankDateApi;
+    }
+
+    public static GankCategoryApi getGankCategoryApi() {
+        if (gankCategoryApi == null) {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .client(okHttpClient)
+                    .baseUrl("http://gank.io/api/search/query/listview/category/")
+                    .addConverterFactory(gsonConverterFactory)
+                    .addCallAdapterFactory(rxJavaCallAdapterFactory)
+                    .build();
+            gankCategoryApi = retrofit.create(GankCategoryApi.class);
+        }
+        return gankCategoryApi;
     }
 }

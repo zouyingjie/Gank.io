@@ -45,9 +45,12 @@ public class TodayGankPresenter implements TodayContract.Presenter {
     };
 
 
-    public TodayGankPresenter(@NonNull TodayContract.View todayGankView) {
+    private TodayGankPresenter(@NonNull TodayContract.View todayGankView) {
         this.todayGankView = todayGankView;
-        todayGankView.setPresenter(this);
+    }
+
+    public static TodayGankPresenter getInstance(@NonNull TodayContract.View todayGankView){
+        return new TodayGankPresenter(todayGankView);
     }
 
     @Override
