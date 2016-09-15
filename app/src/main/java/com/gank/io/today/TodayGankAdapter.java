@@ -51,10 +51,8 @@ public class TodayGankAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         switch (viewType) {
             case TYPE_CONTENT:
                 return new ContentHolder(parent);
-
             case TYPE_TITLE:
                 return new TitleHolder(parent);
-
             default:
                 break;
         }
@@ -100,7 +98,7 @@ public class TodayGankAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         TextView tvContentTitle;
 
         public ContentHolder(View parent) {
-            super(LayoutInflater.from(parent.getContext()).inflate(R.layout.main_today_gank_content, (ViewGroup) parent, false));
+            super(LayoutInflater.from(parent.getContext()).inflate(R.layout.gank_content_title_item, (ViewGroup) parent, false));
             ButterKnife.bind(this, itemView);
         }
     }

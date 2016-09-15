@@ -1,7 +1,9 @@
 package com.gank.io.today;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -35,14 +37,19 @@ public class GankCategoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gank_category);
-        toolbar = (Toolbar) findViewById(R.id.toolbar_gank_category);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(getIntent().getStringExtra("TITLE"));
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_gank_category);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new CategoryAdapter(this, datas);
         recyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener(new CategoryAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, String url) {
+                Intent intent = new Intent(GankCategoryActivity.this, GankDetailActivity.class);
+                intent.putExtra("GANK_URL", url);
+                startActivity(intent);
+            }
+        });
 
 
     }
@@ -76,9 +83,17 @@ public class GankCategoryActivity extends AppCompatActivity {
                 });
     }
 
-    class CategoryAdapter extends RecyclerView.Adapter {
+    static class CategoryAdapter extends RecyclerView.Adapter {
         private Context context;
         private List<GankCategory.Result> results;
+        private OnItemClickListener listener;
+
+        public void setOnItemClickListener(@NonNull OnItemClickListener listener){
+            this.listener = listener;
+        }
+        interface OnItemClickListener{
+            void onItemClick(View v, String url);
+        }
 
         public void setData(List<GankCategory.Result> results){
             this.results = results;
@@ -91,14 +106,21 @@ public class GankCategoryActivity extends AppCompatActivity {
         }
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(context).inflate(R.layout.recycler_category_item, parent, false);
+            View view = LayoutInflater.from(context).inflate(R.layout.gank_content_title_item, parent, false);
             VH holder = new VH(view);
+
             return holder;
         }
 
         @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
             ((VH) holder).textView.setText(results.get(position).desc);
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onItemClick(v, results.get(position).url);
+                }
+            });
         }
 
         @Override
@@ -109,13 +131,13 @@ public class GankCategoryActivity extends AppCompatActivity {
 
     }
 
-    class VH extends RecyclerView.ViewHolder {
+    static class VH extends RecyclerView.ViewHolder {
 
         TextView textView;
 
         public VH(View itemView) {
             super(itemView);
-            textView = (TextView) itemView.findViewById(R.id.tv_category_title);
+            textView = (TextView) itemView.findViewById(R.id.tv_gank_content_title);
         }
     }
 }
