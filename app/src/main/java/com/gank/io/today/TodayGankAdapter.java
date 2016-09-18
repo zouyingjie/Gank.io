@@ -7,9 +7,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.gank.io.R;
-import com.gank.io.model.GankDayContentItem;
-import com.gank.io.model.GankDayItem;
-import com.gank.io.model.GankDayTitleItem;
+import com.gank.io.model.gank.GankDayContentItem;
+import com.gank.io.model.gank.GankDayItem;
+import com.gank.io.model.gank.GankDayTitleItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +33,7 @@ public class TodayGankAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         items = new ArrayList<>(10);
     }
 
-    public interface OnItemClickListener{
+    public interface OnItemClickListener {
         void onItemClick(GankDayContentItem item);
     }
 
@@ -41,10 +41,27 @@ public class TodayGankAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         this.items = data;
         notifyDataSetChanged();
     }
-    public void setOnItemClickListener(OnItemClickListener listener){
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
     }
 
+
+    @Override
+    public int getItemCount() {
+        return items.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        GankDayItem dayItem = items.get(position);
+        if (dayItem instanceof GankDayContentItem) {
+            return TYPE_CONTENT;
+        } else if (dayItem instanceof GankDayTitleItem) {
+            return TYPE_TITLE;
+        }
+        return TYPE_CONTENT;
+    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -77,23 +94,8 @@ public class TodayGankAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
     }
 
-    @Override
-    public int getItemCount() {
-        return items.size();
-    }
 
-    @Override
-    public int getItemViewType(int position) {
-        GankDayItem dayItem = items.get(position);
-        if (dayItem instanceof GankDayContentItem) {
-            return TYPE_CONTENT;
-        } else if (dayItem instanceof GankDayTitleItem) {
-            return TYPE_TITLE;
-        }
-        return TYPE_CONTENT;
-    }
-
-    public static class ContentHolder extends RecyclerView.ViewHolder {
+    static class ContentHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_gank_content_title)
         TextView tvContentTitle;
 
@@ -103,7 +105,7 @@ public class TodayGankAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
     }
 
-    public static class TitleHolder extends RecyclerView.ViewHolder {
+    static class TitleHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_gank_title)
         TextView tvGankTitle;
 

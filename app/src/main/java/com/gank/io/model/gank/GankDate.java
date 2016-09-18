@@ -1,4 +1,4 @@
-package com.gank.io.today;
+package com.gank.io.model.gank;
 
 import java.util.List;
 
@@ -7,6 +7,6 @@ import java.util.List;
  */
 
 public class GankDate {
-    String error;
-    List<String> results;
+    public String error;
+    public List<String> results;
 }

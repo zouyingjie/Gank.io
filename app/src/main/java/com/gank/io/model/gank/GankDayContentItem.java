@@ -1,4 +1,4 @@
-package com.gank.io.model;
+package com.gank.io.model.gank;
 
 import java.util.ArrayList;
 import java.util.List;

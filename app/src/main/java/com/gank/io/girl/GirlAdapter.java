@@ -1,7 +1,6 @@
 package com.gank.io.girl;
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,9 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.gank.io.R;
-import com.gank.io.model.GankGirlItem;
+import com.gank.io.model.girl.GankGirlItem;
+import com.gank.io.util.ImageUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,22 +20,24 @@ import java.util.List;
  * Created by zouyingjie on 16/8/27.
  */
 
-public class GirlAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class GirlAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context context;
     private ArrayList<GankGirlItem> girls;
 
-    public GirlAdapter(){}
-    public GirlAdapter(Context context, ArrayList<GankGirlItem> girls){
+    public GirlAdapter() {
+    }
+
+    public GirlAdapter(Context context, ArrayList<GankGirlItem> girls) {
         this.context = context;
         this.girls = girls;
     }
 
-    public void setImages(List<GankGirlItem> girls){
-        int notiPosition = this.girls.size();
-         this.girls.addAll(girls);
-        notifyItemRangeChanged(notiPosition, girls.size());
+    public void setImages(List<GankGirlItem> girls) {
+        this.girls.addAll(girls);
+        notifyItemRangeChanged(this.girls.size(), girls.size());
     }
+
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         CardView cardView = (CardView) LayoutInflater.from(context).inflate(R.layout.girl_item, parent, false);
         GirlHolder holder = new GirlHolder(cardView);
@@ -46,14 +47,14 @@ public class GirlAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         GankGirlItem girlItem = girls.get(position);
-        Uri uri = Uri.parse(girlItem.imageUrl);
-
-        Glide.with(context)
-                .load(uri)
-                .centerCrop()
-                .crossFade()
-                .into(((GirlHolder)holder).ivGirl);
-        ((GirlHolder)holder).tvDescription.setText(girlItem.description);
+//        Uri uri = Uri.parse(girlItem.imageUrl);
+        ImageUtils.loadImageWithString(context, girlItem.imageUrl, ((GirlHolder) holder).ivGirl);
+//        Glide.with(context)
+//                .load(uri)
+//                .centerCrop()
+//                .crossFade()
+//                .into(((GirlHolder) holder).ivGirl);
+        ((GirlHolder) holder).tvDescription.setText(girlItem.description);
     }
 
 
@@ -63,9 +64,10 @@ public class GirlAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     }
 
 
-    static class GirlHolder extends RecyclerView.ViewHolder{
+    static class GirlHolder extends RecyclerView.ViewHolder {
         ImageView ivGirl;
         TextView tvDescription;
+
         public GirlHolder(View itemView) {
             super(itemView);
             ivGirl = (ImageView) itemView.findViewById(R.id.iv_girl);

@@ -2,7 +2,7 @@ package com.gank.io.girl;
 
 import com.gank.io.base.BasePresenter;
 import com.gank.io.base.BaseView;
-import com.gank.io.model.GankGirlItem;
+import com.gank.io.model.girl.GankGirlItem;
 
 import java.util.List;
 
@@ -32,8 +32,6 @@ public class GirlContract {
     interface Presenter extends BasePresenter{
 
         void loadImage();
-
-
         void unsubscribe();
     }
 }

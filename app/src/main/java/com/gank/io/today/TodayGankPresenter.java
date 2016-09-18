@@ -2,9 +2,10 @@ package com.gank.io.today;
 
 import android.support.annotation.NonNull;
 
-import com.gank.io.model.GankDayContentItem;
-import com.gank.io.model.GankDayData;
-import com.gank.io.model.GankDayItem;
+import com.gank.io.model.gank.GankDate;
+import com.gank.io.model.gank.GankDayContentItem;
+import com.gank.io.model.gank.GankDayData;
+import com.gank.io.model.gank.GankDayItem;
 import com.gank.io.network.ApiService;
 import com.gank.io.util.GankDayDataToGankItemMapper;
 
@@ -62,7 +63,7 @@ public class TodayGankPresenter implements TodayContract.Presenter {
     public void loadTodayGankData() {
         unsubscribe();
 
-        Func1<GankDate, Calendar> gankToCalendar = new Func1<GankDate, Calendar>() {
+        Func1<GankDate, Calendar> gankDateToCalendar = new Func1<GankDate, Calendar>() {
             @Override
             public Calendar call(GankDate gankDate) {
                 return getLastDate(gankDate);
@@ -76,7 +77,7 @@ public class TodayGankPresenter implements TodayContract.Presenter {
             }
         };
         ApiService.getGankApi().getHistoryDate()
-                .map(gankToCalendar)
+                .map(gankDateToCalendar)
                 .flatMap(calendarToGankDayData)
                 .map(GankDayDataToGankItemMapper.getInstance())
                 .subscribeOn(Schedulers.io())

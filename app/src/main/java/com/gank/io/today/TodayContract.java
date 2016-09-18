@@ -2,7 +2,7 @@ package com.gank.io.today;
 
 import com.gank.io.base.BasePresenter;
 import com.gank.io.base.BaseView;
-import com.gank.io.model.GankDayItem;
+import com.gank.io.model.gank.GankDayItem;
 
 import java.util.List;
 
@@ -12,16 +12,18 @@ import java.util.List;
 
 public class TodayContract {
 
-    public interface Presenter extends BasePresenter{
+    public interface Presenter extends BasePresenter {
 
         void loadTodayGankData();
+
         void unsubscribe();
 
     }
 
-    public interface View extends BaseView<Presenter>{
+    public interface View extends BaseView<Presenter> {
 
         void loadTodayGankData(List<GankDayItem> gankDayItems);
+
         void setTodayGirl(String url);
     }
 }

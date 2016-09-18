@@ -1,5 +1,6 @@
-package com.gank.io.model;
+package com.gank.io.model.girl;
 
+import com.gank.io.model.gank.Gank;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -11,5 +12,5 @@ import java.util.List;
 public class GankGirlResult {
     public boolean error;
     public @SerializedName("results")
-    List<GankGirl> beauties;
+    List<Gank> beauties;
 }

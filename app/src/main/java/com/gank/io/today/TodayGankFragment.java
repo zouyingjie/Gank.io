@@ -11,8 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.gank.io.R;
-import com.gank.io.model.GankDayContentItem;
-import com.gank.io.model.GankDayItem;
+import com.gank.io.constant.Contants;
+import com.gank.io.gankdetail.GankDetailActivity;
+import com.gank.io.model.gank.GankDayContentItem;
+import com.gank.io.model.gank.GankDayItem;
 
 import java.util.List;
 
@@ -35,6 +37,11 @@ public class TodayGankFragment  extends Fragment implements TodayContract.View {
     public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_today_gank, container, false);
         ButterKnife.bind(this, view);
+        initRecycler();
+        return view;
+    }
+
+    private void initRecycler(){
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         adapter = new TodayGankAdapter();
         recyclerToadyGank.setAdapter(adapter);
@@ -43,14 +50,11 @@ public class TodayGankFragment  extends Fragment implements TodayContract.View {
             @Override
             public void onItemClick(GankDayContentItem item) {
                 Intent intent = new Intent(getActivity(), GankDetailActivity.class);
-                intent.putExtra("GANK_URL",item.url);
+                intent.putExtra(Contants.GANK_URL,item.url);
                 startActivity(intent);
             }
         });
-        presenter.loadTodayGankData();
-        return view;
     }
-
     @Override
     public void onResume() {
         super.onResume();

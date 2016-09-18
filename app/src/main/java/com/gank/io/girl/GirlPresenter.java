@@ -3,7 +3,7 @@ package com.gank.io.girl;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
 
-import com.gank.io.model.GankGirlItem;
+import com.gank.io.model.girl.GankGirlItem;
 import com.gank.io.network.ApiService;
 import com.gank.io.util.GankBeautyResultToItemsMapper;
 
@@ -26,7 +26,6 @@ public class GirlPresenter implements GirlContract.Presenter {
     Observer<List<GankGirlItem>> observer = new Observer<List<GankGirlItem>>() {
         @Override
         public void onCompleted() {
-            girlView.endPullRefresh();
             Toast.makeText(((GirlFragment) girlView).getContext(), "Completed", Toast.LENGTH_LONG).show();
         }
 

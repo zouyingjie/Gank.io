@@ -1,4 +1,4 @@
-package com.gank.io.model;
+package com.gank.io.model.gank;
 
 /**
  * Created by zouyingjie on 16/9/5.
@@ -13,5 +13,4 @@ public class Gank {
     public String url;
     public String used;
     public String who;
-
 }

@@ -1,7 +1,7 @@
 # Gank.io
 One Gank android client to practice some knowledge,
 * MVP
-* Fresco
+* Glide
 * RxJava + Retrofit
 * Dragger2
 * RecyclerView

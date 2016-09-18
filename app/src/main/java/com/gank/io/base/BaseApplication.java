@@ -1,4 +1,4 @@
-package com.gank.io;
+package com.gank.io.base;
 
 import android.app.Application;
 

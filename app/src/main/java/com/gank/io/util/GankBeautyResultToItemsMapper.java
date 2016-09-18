@@ -1,8 +1,8 @@
 package com.gank.io.util;
 
-import com.gank.io.model.GankGirl;
-import com.gank.io.model.GankGirlItem;
-import com.gank.io.model.GankGirlResult;
+import com.gank.io.model.gank.Gank;
+import com.gank.io.model.girl.GankGirlItem;
+import com.gank.io.model.girl.GankGirlResult;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -28,20 +28,20 @@ public class GankBeautyResultToItemsMapper implements Func1<GankGirlResult, List
 
     @Override
     public List<GankGirlItem> call(GankGirlResult gankBeautyResult) {
-        List<GankGirl> gankBeauties = gankBeautyResult.beauties;
+        List<Gank> gankBeauties = gankBeautyResult.beauties;
         List<GankGirlItem> items = new ArrayList<>(gankBeauties.size());
         SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SS'Z'");
         SimpleDateFormat outputFormat = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
-        for (GankGirl girl : gankBeauties) {
+        for (Gank gank : gankBeauties) {
             GankGirlItem item = new GankGirlItem();
             try {
-                Date date = inputFormat.parse(girl.createdAt);
+                Date date = inputFormat.parse(gank.createdAt);
                 item.description = outputFormat.format(date);
             } catch (ParseException e) {
                 e.printStackTrace();
                 item.description = "unknown date";
             }
-            item.imageUrl = girl.url;
+            item.imageUrl = gank.url;
             items.add(item);
         }
         return items;

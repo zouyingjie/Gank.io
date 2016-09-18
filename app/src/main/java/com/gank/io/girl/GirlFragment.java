@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.gank.io.R;
-import com.gank.io.model.GankGirlItem;
+import com.gank.io.model.girl.GankGirlItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,7 +73,7 @@ public class GirlFragment extends Fragment implements GirlContract.View, SwipeRe
         final GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         recyclerGirl.setLayoutManager(layoutManager);
         recyclerGirl.setAdapter(adapter);
-        recyclerGirl.setOnScrollListener(new RecyclerView.OnScrollListener() {
+        recyclerGirl.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
@@ -87,7 +87,6 @@ public class GirlFragment extends Fragment implements GirlContract.View, SwipeRe
                 super.onScrolled(recyclerView, dx, dy);
             }
         });
-
     }
 
 
@@ -120,15 +119,14 @@ public class GirlFragment extends Fragment implements GirlContract.View, SwipeRe
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        presenter.unsubscribe();
-    }
-
-    @Override
     public void onRefresh() {
         presenter.loadImage();
     }
 
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.unsubscribe();
+        removePresenter();
+    }
 }

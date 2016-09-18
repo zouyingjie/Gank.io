@@ -5,7 +5,7 @@
     android:id="@+id/activity_gank_detail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.gank.io.today.GankDetailActivity">
+    tools:context="com.gank.io.gankdetail.GankDetailActivity">
 
     <WebView
         android:id="@+id/web_gank_detail"

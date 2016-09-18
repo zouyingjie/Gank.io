@@ -12,7 +12,6 @@ import java.util.List;
 
 public class ZhuangXContract {
 
-    //http://zhuangbi.info/
     interface View extends BaseView<Presenter>{
         void startLoad();
         void endLoad();

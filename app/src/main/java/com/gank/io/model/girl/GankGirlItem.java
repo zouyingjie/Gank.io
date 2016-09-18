@@ -1,10 +1,13 @@
-package com.gank.io.model;
+package com.gank.io.model.girl;
+
+import com.gank.io.model.gank.Gank;
+import com.gank.io.model.gank.GankDayItem;
 
 /**
  * Created by zouyingjie on 16/8/26.
  */
 
-public class GankGirlItem implements GankDayItem{
+public class GankGirlItem implements GankDayItem {
     public String description;
     public String imageUrl;
 

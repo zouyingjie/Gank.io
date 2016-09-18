@@ -1,4 +1,4 @@
-package com.gank.io.model;
+package com.gank.io.model.gank;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ public class GankCategory {
     public String error;
     public List<Result> results;
 
-    public static class Result{
+    public static class Result {
         public String desc;
         public String ganhuo_id;
         public String publishedAt;

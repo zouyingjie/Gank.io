@@ -1,13 +1,11 @@
 package com.gank.io.today;
 
-import android.Manifest;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -23,10 +21,12 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.gank.io.R;
-import com.gank.io.girl.GirlActivity;
-import com.gank.io.model.GankDayContentItem;
-import com.gank.io.model.GankDayItem;
 import com.gank.io.constant.GankResourceType;
+import com.gank.io.gankdetail.GankCategoryActivity;
+import com.gank.io.gankdetail.GankDetailActivity;
+import com.gank.io.girl.GirlActivity;
+import com.gank.io.model.gank.GankDayContentItem;
+import com.gank.io.model.gank.GankDayItem;
 import com.gank.io.zhuangbi.ZhuangXActivity;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareAPI;
@@ -47,11 +47,11 @@ public class TodayGankActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        String[] mPermissionList = new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.CALL_PHONE, Manifest.permission.READ_LOGS, Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.SET_DEBUG_APP, Manifest.permission.SYSTEM_ALERT_WINDOW, Manifest.permission.GET_ACCOUNTS};
-        ActivityCompat.requestPermissions(TodayGankActivity.this, mPermissionList, 100);
+//        String[] mPermissionList = new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.CALL_PHONE, Manifest.permission.READ_LOGS, Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.SET_DEBUG_APP, Manifest.permission.SYSTEM_ALERT_WINDOW, Manifest.permission.GET_ACCOUNTS};
+//        ActivityCompat.requestPermissions(TodayGankActivity.this, mPermissionList, 100);
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Gank.io");
+        getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
 
         recyclerToadyGank = (RecyclerView) findViewById(R.id.recycler_today_gank);
         ivTodayGril = (ImageView) findViewById(R.id.iv_today_girl);
@@ -86,7 +86,6 @@ public class TodayGankActivity extends AppCompatActivity
             }
         });
         this.presenter = TodayGankPresenter.getInstance(this);
-        presenter.loadTodayGankData();
 
     }
 

@@ -9,8 +9,8 @@ import dagger.Provides;
 
 @Module
 public class GirlModule {
-
-    @Provides GirlAdapter providerGirlAdapter(){
+    @Provides
+    GirlAdapter providerGirlAdapter() {
         return new GirlAdapter();
     }
 }

@@ -2,6 +2,7 @@ package com.gank.io.util;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -11,7 +12,15 @@ import com.bumptech.glide.Glide;
  */
 
 public class ImageUtils {
-    public static void loadImage(Context context, String uri, ImageView imageView) {
+    public static void loadImageWithString(Context context, String uri, ImageView imageView) {
+        Glide.with(context)
+                .load(uri)
+                .centerCrop()
+                .crossFade()
+                .into(imageView);
+    }
+
+    public static void loadImageWithUri(Context context, Uri uri, ImageView imageView) {
         Glide.with(context)
                 .load(uri)
                 .centerCrop()
