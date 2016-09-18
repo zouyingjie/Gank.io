@@ -3,7 +3,7 @@ package com.gank.io.girl;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
 
-import com.gank.io.model.gank.GankGirlItem;
+import com.gank.io.model.GankGirlItem;
 import com.gank.io.network.ApiService;
 import com.gank.io.util.GankBeautyResultToItemsMapper;
 
@@ -39,7 +39,6 @@ public class GirlPresenter implements GirlContract.Presenter {
         @Override
         public void onNext(List<GankGirlItem> images) {
             girlView.endPullRefresh();
-
             girlView.refreshImages(images);
         }
     };
@@ -54,7 +53,7 @@ public class GirlPresenter implements GirlContract.Presenter {
         unsubscribe();
         girlView.startPullRefresh();
 
-        subscription = ApiService.getGankGirlApi()
+        subscription = ApiService.getGankApi()
                 .getGirls(10, page++)
                 .map(GankBeautyResultToItemsMapper.getInstance())
                 .subscribeOn(Schedulers.io())

@@ -15,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gank.io.R;
-import com.gank.io.model.gank.GankCategory;
+import com.gank.io.model.GankCategory;
 import com.gank.io.network.ApiService;
 
 import java.util.ArrayList;
@@ -61,7 +61,7 @@ public class GankCategoryActivity extends AppCompatActivity {
     }
 
     private void loadData() {
-        ApiService.getGankCategoryApi().getCategory(getIntent().getStringExtra("TITLE"), "10")
+        ApiService.getGankApi().getDataByCategory(getIntent().getStringExtra("TITLE"), "10")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<GankCategory>() {

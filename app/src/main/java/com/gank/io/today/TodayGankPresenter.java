@@ -2,9 +2,9 @@ package com.gank.io.today;
 
 import android.support.annotation.NonNull;
 
-import com.gank.io.model.gank.GankDayContentItem;
-import com.gank.io.model.gank.GankDayData;
-import com.gank.io.model.gank.GankDayItem;
+import com.gank.io.model.GankDayContentItem;
+import com.gank.io.model.GankDayData;
+import com.gank.io.model.GankDayItem;
 import com.gank.io.network.ApiService;
 import com.gank.io.util.GankDayDataToGankItemMapper;
 
@@ -38,8 +38,7 @@ public class TodayGankPresenter implements TodayContract.Presenter {
         @Override
         public void onNext(List<GankDayItem> gankDayItems) {
 
-
-            todayGankView.setTodayGirl(((GankDayContentItem)gankDayItems.remove(gankDayItems.size()-1)).url);
+            todayGankView.setTodayGirl(((GankDayContentItem) gankDayItems.remove(gankDayItems.size() - 1)).url);
             todayGankView.loadTodayGankData(gankDayItems);
         }
     };
@@ -49,7 +48,7 @@ public class TodayGankPresenter implements TodayContract.Presenter {
         this.todayGankView = todayGankView;
     }
 
-    public static TodayGankPresenter getInstance(@NonNull TodayContract.View todayGankView){
+    public static TodayGankPresenter getInstance(@NonNull TodayContract.View todayGankView) {
         return new TodayGankPresenter(todayGankView);
     }
 
@@ -63,22 +62,22 @@ public class TodayGankPresenter implements TodayContract.Presenter {
     public void loadTodayGankData() {
         unsubscribe();
 
-        Func1<GankDate, Calendar> func1 = new Func1<GankDate, Calendar>() {
+        Func1<GankDate, Calendar> gankToCalendar = new Func1<GankDate, Calendar>() {
             @Override
             public Calendar call(GankDate gankDate) {
                 return getLastDate(gankDate);
             }
         };
 
-        Func1<Calendar,Observable<GankDayData>> func2 = new Func1<Calendar, Observable<GankDayData>>() {
+        Func1<Calendar, Observable<GankDayData>> calendarToGankDayData = new Func1<Calendar, Observable<GankDayData>>() {
             @Override
             public Observable<GankDayData> call(Calendar calendar) {
                 return getGankDayData(calendar);
             }
         };
-        ApiService.getDayApi().getDay()
-                .map(func1)
-                .flatMap(func2)
+        ApiService.getGankApi().getHistoryDate()
+                .map(gankToCalendar)
+                .flatMap(calendarToGankDayData)
                 .map(GankDayDataToGankItemMapper.getInstance())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -88,6 +87,7 @@ public class TodayGankPresenter implements TodayContract.Presenter {
 
     /**
      * 获取Gank最近更新的日期
+     *
      * @param gankDate
      * @return
      */
@@ -102,6 +102,7 @@ public class TodayGankPresenter implements TodayContract.Presenter {
 
     /**
      * 获取对应日期的数据
+     *
      * @param c
      * @return
      */
@@ -113,7 +114,7 @@ public class TodayGankPresenter implements TodayContract.Presenter {
                 .append("/")
                 .append(c.get(Calendar.DAY_OF_MONTH));
 
-        return ApiService.getGankDayApi().getDayData(buffer.toString());
+        return ApiService.getGankApi().getDataByDate(buffer.toString());
     }
 
     @Override

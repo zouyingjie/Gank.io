@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.gank.io.R;
-import com.gank.io.model.gank.GankGirlItem;
+import com.gank.io.model.GankGirlItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +38,8 @@ public class GirlFragment extends Fragment implements GirlContract.View, SwipeRe
     @BindView(R.id.bar_gril)
     ProgressBar barGirl;
 
-    @Inject GirlAdapter adapter;
+    @Inject
+    GirlAdapter adapter;
 
     private ArrayList<GankGirlItem> girls = new ArrayList<GankGirlItem>();
 
@@ -48,11 +49,10 @@ public class GirlFragment extends Fragment implements GirlContract.View, SwipeRe
     }
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root =  inflater.inflate(R.layout.fragment_blank, container, false);
+        View root = inflater.inflate(R.layout.fragment_blank, container, false);
         ButterKnife.bind(this, root);
         initRootView();
         return root;
@@ -65,23 +65,19 @@ public class GirlFragment extends Fragment implements GirlContract.View, SwipeRe
     }
 
     @SuppressLint("NewApi")
-    private void initRootView(){
+    private void initRootView() {
         swipeGirl.setColorSchemeColors(Color.BLUE, Color.GREEN, Color.RED, Color.YELLOW);
         swipeGirl.setEnabled(false);
-//        swipeGirl.setOnRefreshListener(this);
-
 
         adapter = new GirlAdapter(getContext(), girls);
         final GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         recyclerGirl.setLayoutManager(layoutManager);
         recyclerGirl.setAdapter(adapter);
-//        View footView = LayoutInflater.from(getContext()).inflate(R.layout.layout_recycler_footer, null);
-//        recyclerGirl.addView(footView, adapter.getItemCount());
         recyclerGirl.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (newState ==RecyclerView.SCROLL_STATE_IDLE && layoutManager.findLastVisibleItemPosition() + 1 == adapter.getItemCount()) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE && layoutManager.findLastVisibleItemPosition() + 1 == adapter.getItemCount()) {
                     presenter.loadImage();
                 }
             }
@@ -93,9 +89,6 @@ public class GirlFragment extends Fragment implements GirlContract.View, SwipeRe
         });
 
     }
-
-
-
 
 
     @Override
@@ -131,7 +124,6 @@ public class GirlFragment extends Fragment implements GirlContract.View, SwipeRe
         super.onDestroy();
         presenter.unsubscribe();
     }
-
 
     @Override
     public void onRefresh() {

@@ -1,7 +1,7 @@
 package com.gank.io.util;
 
 import com.gank.io.model.GankGirl;
-import com.gank.io.model.gank.GankGirlItem;
+import com.gank.io.model.GankGirlItem;
 import com.gank.io.model.GankGirlResult;
 
 import java.text.ParseException;

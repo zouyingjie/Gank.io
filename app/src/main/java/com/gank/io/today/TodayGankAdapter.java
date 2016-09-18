@@ -7,9 +7,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.gank.io.R;
-import com.gank.io.model.gank.GankDayContentItem;
-import com.gank.io.model.gank.GankDayItem;
-import com.gank.io.model.gank.GankDayTitleItem;
+import com.gank.io.model.GankDayContentItem;
+import com.gank.io.model.GankDayItem;
+import com.gank.io.model.GankDayTitleItem;
 
 import java.util.ArrayList;
 import java.util.List;

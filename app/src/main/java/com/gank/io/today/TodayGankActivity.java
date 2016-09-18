@@ -23,11 +23,10 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.gank.io.R;
-import com.gank.io.TestFragment;
 import com.gank.io.girl.GirlActivity;
-import com.gank.io.model.gank.GankDayContentItem;
-import com.gank.io.model.gank.GankDayItem;
-import com.gank.io.model.gank.GankResourceType;
+import com.gank.io.model.GankDayContentItem;
+import com.gank.io.model.GankDayItem;
+import com.gank.io.constant.GankResourceType;
 import com.gank.io.zhuangbi.ZhuangXActivity;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareAPI;
@@ -98,13 +97,6 @@ public class TodayGankActivity extends AppCompatActivity
         presenter.loadTodayGankData();
     }
 
-    private void initTestFragment() {
-        TestFragment fragment = new TestFragment();
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fl_today_gank_content, fragment)
-                .commit();
-
-    }
 
     private void showShareDialog() {
         UMImage image = new UMImage(TodayGankActivity.this, "http://www.umeng.com/images/pic/social/integrated_3.png");

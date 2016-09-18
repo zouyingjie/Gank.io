@@ -17,7 +17,8 @@ public class GirlActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolBar_girl);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setIcon(android.R.drawable.ic_dialog_alert);
+        actionBar.setIcon(R.drawable.ic_girl);
+
         GirlFragment fragment = new GirlFragment();
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fl_girl_content, fragment)

@@ -1,10 +1,10 @@
 package com.gank.io.util;
 
-import com.gank.io.model.gank.GankDayContentItem;
-import com.gank.io.model.gank.GankDayData;
-import com.gank.io.model.gank.GankDayItem;
-import com.gank.io.model.gank.GankDayTitleItem;
-import com.gank.io.model.gank.GankResourceType;
+import com.gank.io.model.GankDayContentItem;
+import com.gank.io.model.GankDayData;
+import com.gank.io.model.GankDayItem;
+import com.gank.io.model.GankDayTitleItem;
+import com.gank.io.constant.GankResourceType;
 
 import java.util.ArrayList;
 import java.util.List;

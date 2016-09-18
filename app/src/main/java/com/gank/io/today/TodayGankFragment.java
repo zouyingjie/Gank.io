@@ -11,8 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.gank.io.R;
-import com.gank.io.model.gank.GankDayContentItem;
-import com.gank.io.model.gank.GankDayItem;
+import com.gank.io.model.GankDayContentItem;
+import com.gank.io.model.GankDayItem;
 
 import java.util.List;
 

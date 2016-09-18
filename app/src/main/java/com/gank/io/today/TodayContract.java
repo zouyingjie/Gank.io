@@ -2,7 +2,7 @@ package com.gank.io.today;
 
 import com.gank.io.base.BasePresenter;
 import com.gank.io.base.BaseView;
-import com.gank.io.model.gank.GankDayItem;
+import com.gank.io.model.GankDayItem;
 
 import java.util.List;
 
