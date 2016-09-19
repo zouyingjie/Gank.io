@@ -63,22 +63,22 @@ public class TodayGankPresenter implements TodayContract.Presenter {
     public void loadTodayGankData() {
         unsubscribe();
 
-        Func1<GankDate, Calendar> gankDateToCalendar = new Func1<GankDate, Calendar>() {
+        Func1<GankDate, Calendar> gankDateToCalendarFunc = new Func1<GankDate, Calendar>() {
             @Override
             public Calendar call(GankDate gankDate) {
                 return getLastDate(gankDate);
             }
         };
 
-        Func1<Calendar, Observable<GankDayData>> calendarToGankDayData = new Func1<Calendar, Observable<GankDayData>>() {
+        Func1<Calendar, Observable<GankDayData>> calendarToGankDayDataFunc = new Func1<Calendar, Observable<GankDayData>>() {
             @Override
             public Observable<GankDayData> call(Calendar calendar) {
                 return getGankDayData(calendar);
             }
         };
         ApiService.getGankApi().getHistoryDate()
-                .map(gankDateToCalendar)
-                .flatMap(calendarToGankDayData)
+                .map(gankDateToCalendarFunc)
+                .flatMap(calendarToGankDayDataFunc)
                 .map(GankDayDataToGankItemMapper.getInstance())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

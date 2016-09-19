@@ -1,8 +1,6 @@
 package com.gank.io.today;
 
 import android.content.Intent;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -19,14 +17,15 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.gank.io.R;
+import com.gank.io.constant.Contants;
 import com.gank.io.constant.GankResourceType;
 import com.gank.io.gankdetail.GankCategoryActivity;
 import com.gank.io.gankdetail.GankDetailActivity;
 import com.gank.io.girl.GirlActivity;
 import com.gank.io.model.gank.GankDayContentItem;
 import com.gank.io.model.gank.GankDayItem;
+import com.gank.io.util.ImageUtils;
 import com.gank.io.zhuangbi.ZhuangXActivity;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareAPI;
@@ -81,7 +80,7 @@ public class TodayGankActivity extends AppCompatActivity
             @Override
             public void onItemClick(GankDayContentItem item) {
                 Intent intent = new Intent(TodayGankActivity.this, GankDetailActivity.class);
-                intent.putExtra("GANK_URL", item.url);
+                intent.putExtra(Contants.GANK_URL, item.url);
                 startActivity(intent);
             }
         });
@@ -171,54 +170,30 @@ public class TodayGankActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         Intent intent = new Intent();
-      ;
+        ;
         if (id == R.id.nav_zhuang_x) {
-//            Intent intent = new Intent(this, ZhuangXActivity.class);
             intent.setClass(this, ZhuangXActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_girl) {
-//            Intent intent = new Intent(this, GirlActivity.class);
             intent.setClass(this, GirlActivity.class);
             startActivity(intent);
-        }else if (id == R.id.nav_android){
+        } else if (id == R.id.nav_android) {
             intent.setClass(this, GankCategoryActivity.class);
             intent.putExtra("TITLE", GankResourceType.ANDROID);
             startActivity(intent);
-//            ApiService.getGankCategoryApi().getCategory("Android", "10")
-//                    .subscribeOn(Schedulers.io())
-//                    .observeOn(AndroidSchedulers.mainThread())
-//                    .subscribe(new Observer<GankCategory>() {
-//                        @Override
-//                        public void onCompleted() {
-//                            Toast.makeText(getApplicationContext(), "Completed", Toast.LENGTH_SHORT).show();
-//                        }
-//
-//                        @Override
-//                        public void onError(Throwable e) {
-//                            Toast.makeText(getApplicationContext(), "ERROR", Toast.LENGTH_SHORT).show();
-//                        }
-//
-//                        @Override
-//                        public void onNext(GankCategory gankCategory) {
-//                            Toast.makeText(getApplicationContext(), gankCategory.error+"eee", Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
-        }else if (id == R.id.nav_ios){
+        } else if (id == R.id.nav_ios) {
             intent.setClass(this, GankCategoryActivity.class);
             intent.putExtra("TITLE", GankResourceType.IOS);
             startActivity(intent);
-        }
-        else if (id == R.id.nav_html){
+        } else if (id == R.id.nav_html) {
             intent.setClass(this, GankCategoryActivity.class);
             intent.putExtra("TITLE", GankResourceType.FRONTEND);
             startActivity(intent);
-        }
-        else if (id == R.id.nav_video){
+        } else if (id == R.id.nav_video) {
             intent.setClass(this, GankCategoryActivity.class);
             intent.putExtra("TITLE", GankResourceType.VIDEO);
             startActivity(intent);
-        }
-        else if (id == R.id.nav_extral){
+        } else if (id == R.id.nav_extral) {
             intent.setClass(this, GankCategoryActivity.class);
             intent.putExtra("TITLE", GankResourceType.EXTRA);
             startActivity(intent);
@@ -236,10 +211,7 @@ public class TodayGankActivity extends AppCompatActivity
 
     @Override
     public void setTodayGirl(String url) {
-        Glide.with(this)
-                .load(url)
-                .crossFade()
-                .into(ivTodayGril);
+        ImageUtils.loadImageWithString(this, url, ivTodayGril);
     }
 
 
@@ -253,42 +225,6 @@ public class TodayGankActivity extends AppCompatActivity
         this.presenter = null;
     }
 
-
-    class GankDecoration extends RecyclerView.ItemDecoration {
-        @Override
-        public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
-//            super.onDraw(c, parent, state);
-            Paint paint = new Paint();
-            paint.setColor(getResources().getColor(R.color.colorAccent));
-            paint.setAntiAlias(true);
-            RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
-            if (layoutManager instanceof LinearLayoutManager) {
-                for (int i = 0; i < state.getItemCount(); i++) {
-                    View view = parent.getChildAt(i);
-                    c.drawRect(parent.getLeft(), getTop(parent, i), parent.getRight(), getButtom(parent, i),
-                            paint);
-                }
-
-            }
-//            c.drawRect();
-        }
-
-        private int getTop(RecyclerView parent, int index) {
-            int top = 0;
-            for (int i = 0; i < index; i++) {
-                top = top + parent.getChildAt(i).getHeight();
-            }
-            if (index > 0) {
-                top += 4 * (index - 1);
-            }
-            return top;
-
-        }
-
-        private int getButtom(RecyclerView parent, int index) {
-            return getTop(parent, index) + 4;
-        }
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -24,10 +24,6 @@ public class ApiService {
     private static CallAdapter.Factory rxJavaCallAdapterFactory = RxJavaCallAdapterFactory.create();
 
 
-    /**
-     * 获取GankApi
-     */
-
     public static GankApi getGankApi() {
         if (gankApi == null) {
             gankApi = createRetrofit(BaseUrl.GANK_BASE_URL).create(GankApi.class);
@@ -36,17 +32,13 @@ public class ApiService {
     }
 
 
-    /**
-     * 获取装X大全图片
-     *
-     * @return
-     */
     public static ZhuangImageApi getZhuangXApi() {
         if (zhuangXApi == null) {
             zhuangXApi = createRetrofit(BaseUrl.ZHUANGX_BASE_URL).create(ZhuangImageApi.class);
         }
         return zhuangXApi;
     }
+
 
     private static Retrofit createRetrofit(String baseUrl) {
         Retrofit retrofit = new Retrofit.Builder()
