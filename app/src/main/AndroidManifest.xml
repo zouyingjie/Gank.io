@@ -45,6 +45,7 @@
 
         <activity android:name=".gankdetail.GankDetailActivity"/>
         <activity android:name=".gankdetail.GankCategoryActivity"/>
+        <activity android:name=".girl.GirlImageActivity"/>
 
         <!-- 友盟分享 -->
         <activity

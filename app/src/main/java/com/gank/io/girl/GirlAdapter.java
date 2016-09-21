@@ -1,6 +1,7 @@
 package com.gank.io.girl;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -33,6 +34,14 @@ public class GirlAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         this.girls = girls;
     }
 
+    private OnItemClickListener listener;
+    interface OnItemClickListener{
+        void onItemClickListener(View v, int position);
+    }
+
+    public void setOnItemClickListener(@NonNull OnItemClickListener listener){
+        this.listener = listener;
+    }
     public void setImages(List<GankGirlItem> girls) {
         this.girls.addAll(girls);
         notifyItemRangeChanged(this.girls.size(), girls.size());
@@ -45,16 +54,17 @@ public class GirlAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         GankGirlItem girlItem = girls.get(position);
-//        Uri uri = Uri.parse(girlItem.imageUrl);
         ImageUtils.loadImageWithString(context, girlItem.imageUrl, ((GirlHolder) holder).ivGirl);
-//        Glide.with(context)
-//                .load(uri)
-//                .centerCrop()
-//                .crossFade()
-//                .into(((GirlHolder) holder).ivGirl);
         ((GirlHolder) holder).tvDescription.setText(girlItem.description);
+        ((GirlHolder) holder).ivGirl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClickListener(v, position);
+            }
+        });
+
     }
 
 

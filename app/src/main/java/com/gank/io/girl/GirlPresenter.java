@@ -14,9 +14,6 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-/**
- * Created by zouyingjie on 16/8/26.
- */
 
 public class GirlPresenter implements GirlContract.Presenter {
     private GirlContract.View girlView;

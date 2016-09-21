@@ -20,11 +20,12 @@ public class GirlActivity extends AppCompatActivity {
         actionBar.setIcon(R.drawable.ic_girl);
 
         GirlFragment fragment = new GirlFragment();
+        new GirlPresenter(
+                fragment);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fl_girl_content, fragment)
                 .commit();
 
-        new GirlPresenter(
-                fragment);
+
     }
 }

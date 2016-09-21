@@ -2,8 +2,11 @@ package com.gank.io.girl;
 
 
 import android.annotation.SuppressLint;
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -59,9 +62,14 @@ public class GirlFragment extends Fragment implements GirlContract.View, SwipeRe
     }
 
     @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        presenter.loadImage();
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
-        presenter.loadImage();
     }
 
     @SuppressLint("NewApi")
@@ -85,6 +93,17 @@ public class GirlFragment extends Fragment implements GirlContract.View, SwipeRe
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+            }
+        });
+        adapter.setOnItemClickListener(new GirlAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClickListener(View v, int position) {
+                GankGirlItem item = girls.get(position);
+                Intent intent = new Intent(getActivity(), GirlImageActivity.class);
+                intent.putExtra("GIRL_DESC", item.description);
+                intent.putExtra("GIRL_URL", item.imageUrl);
+                startActivity(intent, ActivityOptions
+                        .makeSceneTransitionAnimation(getActivity(), v, "robot").toBundle());
             }
         });
     }
