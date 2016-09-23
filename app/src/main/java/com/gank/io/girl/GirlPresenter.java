@@ -57,9 +57,6 @@ public class GirlPresenter implements GirlContract.Presenter {
                 .subscribe(observer);
     }
 
-    @Override
-    public void start() {
-    }
 
     @Override
     public void unsubscribe() {

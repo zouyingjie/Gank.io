@@ -13,21 +13,20 @@ import android.widget.ProgressBar;
 import com.gank.io.R;
 import com.gank.io.constant.Contants;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 public class GankDetailActivity extends AppCompatActivity {
 
-    @BindView(R.id.web_gank_detail)
+//    @BindView(R.id.web_gank_detail)
     WebView webView;
-    @BindView(R.id.progressbar_load)
+//    @BindView(R.id.progressbar_load)
     ProgressBar progressBarLoad;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gank_detail);
-        ButterKnife.bind(this);
+//        ButterKnife.bind(this);
+        webView = (WebView) findViewById(R.id.web_gank_detail);
+        progressBarLoad = (ProgressBar) findViewById(R.id.progressbar_load);
         initWebView();
 
 

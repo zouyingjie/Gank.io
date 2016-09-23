@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'android-apt'
+//apply plugin: 'android-apt'
 //上面是plugin领域,描述了gradle所引入的插件,android.application插件包含了
 //Android项目相关的所有工具
 //apt插件包含了下面所需要的引入依赖的butterknite和draager2所需要的插件
@@ -23,6 +23,9 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        jackOptions {
+            enabled true
+        }
     }
     buildTypes {
         release {
@@ -31,6 +34,10 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 
     signingConfigs {
 
@@ -62,8 +69,8 @@ dependencies {
     compile dependency['annotation']
     compile dependency['cardview']
     compile dependency['glide']
-    apt dependency['butterknifeCompiler']
-    apt dependency['draggerCompiler']
+//    apt dependency['butterknifeCompiler']
+//    apt dependency['draggerCompiler']
     compile files('libs/umeng_social_sdk.jar')
     compile files('libs/mta-sdk-1.6.2.jar')
     compile files('libs/SocialSDK_QQZone_3.jar')

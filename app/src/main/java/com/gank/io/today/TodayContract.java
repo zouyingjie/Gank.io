@@ -25,5 +25,7 @@ public class TodayContract {
         void loadTodayGankData(List<GankDayItem> gankDayItems);
 
         void setTodayGirl(String url);
+
+        void showErrorTip();
     }
 }

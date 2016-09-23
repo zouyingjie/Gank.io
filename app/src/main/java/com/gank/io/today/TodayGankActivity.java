@@ -206,12 +206,18 @@ public class TodayGankActivity extends AppCompatActivity
 
     @Override
     public void loadTodayGankData(List<GankDayItem> gankDayItems) {
+        ImageUtils.loadImageWithString(this,  ((GankDayContentItem) gankDayItems.remove(gankDayItems.size() - 1)).url, ivTodayGril);
         adapter.setData(gankDayItems);
     }
 
     @Override
     public void setTodayGirl(String url) {
-        ImageUtils.loadImageWithString(this, url, ivTodayGril);
+
+    }
+
+    @Override
+    public void showErrorTip() {
+       Toast.makeText(this, R.string.query_error_tip, Toast.LENGTH_SHORT).show();
     }
 
 

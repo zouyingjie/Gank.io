@@ -5,5 +5,4 @@ package com.gank.io.base;
  */
 
 public interface BasePresenter {
-    void start();
 }

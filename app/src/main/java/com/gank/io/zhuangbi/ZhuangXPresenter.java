@@ -21,10 +21,11 @@ public class ZhuangXPresenter implements ZhuangXContract.Presenter {
     private ZhuangXContract.View zhuagnxView;
 
 
-    public ZhuangXPresenter(@NonNull ZhuangXContract.View view){
+    public ZhuangXPresenter(@NonNull ZhuangXContract.View view) {
         this.zhuagnxView = view;
         this.zhuagnxView.setPresenter(this);
     }
+
     @Override
     public void loadImage() {
         Call<List<ZhuangXImage>> call = ApiService.getZhuangXApi()
@@ -35,10 +36,10 @@ public class ZhuangXPresenter implements ZhuangXContract.Presenter {
                 List<ZhuangXImage> zhuangXImages = response.body();
                 List<ZhuangXImage> imageDatas = new ArrayList<ZhuangXImage>();
                 //只显示jpg、png和gif三种格式的图片
-                for (ZhuangXImage image:zhuangXImages){
+                for (ZhuangXImage image : zhuangXImages) {
                     if (image.image_url.contains(".jpg")
-                            ||image.image_url.contains(".png")
-                          ||image.image_url.contains(".gif")){
+                            || image.image_url.contains(".png")
+                            || image.image_url.contains(".gif")) {
                         imageDatas.add(image);
                     }
                 }
@@ -52,7 +53,6 @@ public class ZhuangXPresenter implements ZhuangXContract.Presenter {
         });
 
 
-
     }
 
     @Override
@@ -60,8 +60,4 @@ public class ZhuangXPresenter implements ZhuangXContract.Presenter {
 
     }
 
-    @Override
-    public void start() {
-
-    }
 }
