@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,7 +28,6 @@ import rx.schedulers.Schedulers;
 
 public class GankCategoryActivity extends AppCompatActivity {
 
-    private Toolbar toolbar;
     private RecyclerView recyclerView;
 
     private List<GankCategory.Result> datas = new ArrayList<>();
@@ -37,6 +37,19 @@ public class GankCategoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gank_category);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_gank_category);
+        toolbar.setTitle(getIntent().getStringExtra("TITLE"));
+        setSupportActionBar(toolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_gank_category);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -61,7 +74,7 @@ public class GankCategoryActivity extends AppCompatActivity {
     }
 
     private void loadData() {
-        ApiService.getGankApi().getDataByCategory(getIntent().getStringExtra("TITLE"), "10", "1")
+        ApiService.getGankApi().getDataByCategory(getIntent().getStringExtra("TITLE"), "20", "1")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<GankCategory>() {

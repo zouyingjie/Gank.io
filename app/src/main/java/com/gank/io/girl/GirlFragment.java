@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -103,8 +104,13 @@ public class GirlFragment extends Fragment implements GirlContract.View, SwipeRe
                 Intent intent = new Intent(getActivity(), GirlImageActivity.class);
                 intent.putExtra("GIRL_DESC", item.description);
                 intent.putExtra("GIRL_URL", item.imageUrl);
-                startActivity(intent, ActivityOptions
-                        .makeSceneTransitionAnimation(getActivity(), v, "robot").toBundle());
+                if (Build.VERSION.SDK_INT > 21){
+                    startActivity(intent, ActivityOptions
+                            .makeSceneTransitionAnimation(getActivity(), v, "robot").toBundle());
+                }else {
+                    startActivity(intent);
+                }
+
             }
         });
     }

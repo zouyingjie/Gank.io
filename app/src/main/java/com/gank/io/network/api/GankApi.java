@@ -9,9 +9,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 import rx.Observable;
 
-/**
- * Created by zouyingjie on 16/9/18.
- */
+
 
 public interface GankApi {
     @GET("search/query/listview/category/{category}/count/{count}/page/{page}")

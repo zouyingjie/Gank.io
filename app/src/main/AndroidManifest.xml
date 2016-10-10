@@ -39,13 +39,20 @@
         </activity>
         <activity
             android:name=".girl.GirlActivity"
-            android:label="@string/girl_lable"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".zhuangbi.ZhuangXActivity"/>
+
+        <activity
+            android:name=".zhuangbi.ZhuangXActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity android:name=".gankdetail.GankDetailActivity"/>
-        <activity android:name=".gankdetail.GankCategoryActivity"/>
-        <activity android:name=".girl.GirlImageActivity"/>
+        <activity
+            android:name=".gankdetail.GankCategoryActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+        <activity
+            android:name=".girl.GirlImageActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <!-- 友盟分享 -->
         <activity

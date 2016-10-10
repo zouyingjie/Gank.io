@@ -33,6 +33,7 @@ import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class TodayGankActivity extends AppCompatActivity
@@ -48,14 +49,11 @@ public class TodayGankActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 //        String[] mPermissionList = new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.CALL_PHONE, Manifest.permission.READ_LOGS, Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.SET_DEBUG_APP, Manifest.permission.SYSTEM_ALERT_WINDOW, Manifest.permission.GET_ACCOUNTS};
 //        ActivityCompat.requestPermissions(TodayGankActivity.this, mPermissionList, 100);
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
 
-        recyclerToadyGank = (RecyclerView) findViewById(R.id.recycler_today_gank);
-        ivTodayGril = (ImageView) findViewById(R.id.iv_today_girl);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,16 +64,19 @@ public class TodayGankActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        adapter = new TodayGankAdapter();
-        recyclerToadyGank.setAdapter(adapter);
+        ivTodayGril = (ImageView) findViewById(R.id.iv_today_girl);
+
+        recyclerToadyGank = (RecyclerView) findViewById(R.id.recycler_today_gank);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerToadyGank.setLayoutManager(linearLayoutManager);
+
+        adapter = new TodayGankAdapter();
         adapter.setOnItemClickListener(new TodayGankAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(GankDayContentItem item) {
@@ -84,6 +85,9 @@ public class TodayGankActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
+        recyclerToadyGank.setAdapter(adapter);
+
+
         this.presenter = TodayGankPresenter.getInstance(this);
 
     }
@@ -199,6 +203,7 @@ public class TodayGankActivity extends AppCompatActivity
             startActivity(intent);
         }
 
+        Arrays.sort("123".toCharArray());
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -206,7 +211,7 @@ public class TodayGankActivity extends AppCompatActivity
 
     @Override
     public void loadTodayGankData(List<GankDayItem> gankDayItems) {
-        ImageUtils.loadImageWithString(this,  ((GankDayContentItem) gankDayItems.remove(gankDayItems.size() - 1)).url, ivTodayGril);
+        ImageUtils.loadImageWithString(this, ((GankDayContentItem) gankDayItems.remove(gankDayItems.size() - 1)).url, ivTodayGril);
         adapter.setData(gankDayItems);
     }
 
@@ -217,7 +222,7 @@ public class TodayGankActivity extends AppCompatActivity
 
     @Override
     public void showErrorTip() {
-       Toast.makeText(this, R.string.query_error_tip, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.query_error_tip, Toast.LENGTH_SHORT).show();
     }
 
 

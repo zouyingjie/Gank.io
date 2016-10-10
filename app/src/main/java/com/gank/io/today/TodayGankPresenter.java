@@ -14,6 +14,7 @@ import rx.Observable;
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -52,13 +53,39 @@ public class TodayGankPresenter implements TodayContract.Presenter {
     @Override
     public void loadTodayGankData() {
         unsubscribe();
+          //Lambda表达式可以简化代码,但也会降低代码的可读性,两者之间取舍
+//        ApiService.getGankApi().getHistoryDate()
+//                .map(GankDate::getLastDate)
+//                .flatMap(this::getGankDayData)
+//                .map(GankDayData::gankDayDataToGankItem)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(observer);
+
         ApiService.getGankApi().getHistoryDate()
-                .map(GankDate::getLastDate)
-                .flatMap(this::getGankDayData)
-                .map(GankDayData::gankDayDataToGankItem)
-                .subscribeOn(Schedulers.io())
+                .map(new Func1<GankDate, Calendar>() {
+
+                    @Override
+                    public Calendar call(GankDate gankDate) {
+
+                        return gankDate.getLastDate();
+                    }
+                })
+                .flatMap(new Func1<Calendar, Observable<GankDayData>>() {
+                    @Override
+                    public Observable<GankDayData> call(Calendar calendar) {
+                        return getGankDayData(calendar);
+                    }
+                })
+                .map(new Func1<GankDayData, List<GankDayItem>>() {
+                    @Override
+                    public List<GankDayItem> call(GankDayData dayData) {
+                        return dayData.gankDayDataToGankItem();
+                    }
+                }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
+
     }
 
     /**
