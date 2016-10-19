@@ -13,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gank.io.R;
 import com.gank.io.model.gank.GankCategory;
@@ -22,13 +21,17 @@ import com.gank.io.network.ApiService;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class GankCategoryActivity extends AppCompatActivity {
-
-    private RecyclerView recyclerView;
+    @BindView(R.id.recycler_gank_category)
+    RecyclerView recyclerView;
+    @BindView(R.id.toolbar_gank_category)
+    Toolbar toolbar;
 
     private List<GankCategory.Result> datas = new ArrayList<>();
     private CategoryAdapter adapter;
@@ -37,8 +40,9 @@ public class GankCategoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gank_category);
+        ButterKnife.bind(this);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_gank_category);
+        toolbar = (Toolbar) findViewById(R.id.toolbar_gank_category);
         toolbar.setTitle(getIntent().getStringExtra("TITLE"));
         setSupportActionBar(toolbar);
 
@@ -51,7 +55,6 @@ public class GankCategoryActivity extends AppCompatActivity {
             }
         });
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_gank_category);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new CategoryAdapter(this, datas);
         recyclerView.setAdapter(adapter);
@@ -74,26 +77,25 @@ public class GankCategoryActivity extends AppCompatActivity {
     }
 
     private void loadData() {
+        Observer<GankCategory> observer = new Observer<GankCategory>() {
+            @Override
+            public void onCompleted() {
+            }
+
+            @Override
+            public void onError(Throwable e) {
+            }
+
+            @Override
+            public void onNext(GankCategory gankCategory) {
+                adapter.setData(gankCategory.results);
+            }
+        };
+
         ApiService.getGankApi().getDataByCategory(getIntent().getStringExtra("TITLE"), "20", "1")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<GankCategory>() {
-                    @Override
-                    public void onCompleted() {
-                        Toast.makeText(getApplicationContext(), "Completed", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Toast.makeText(getApplicationContext(), "ERROR", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onNext(GankCategory gankCategory) {
-                        Toast.makeText(getApplicationContext(), gankCategory.error + "eee", Toast.LENGTH_SHORT).show();
-                        adapter.setData(gankCategory.results);
-                    }
-                });
+                .subscribe(observer);
     }
 
     static class CategoryAdapter extends RecyclerView.Adapter {
@@ -152,5 +154,7 @@ public class GankCategoryActivity extends AppCompatActivity {
             super(itemView);
             textView = (TextView) itemView.findViewById(R.id.tv_gank_content_title);
         }
+
+
     }
 }

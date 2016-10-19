@@ -11,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -27,29 +26,34 @@ import com.gank.io.model.gank.GankDayContentItem;
 import com.gank.io.model.gank.GankDayItem;
 import com.gank.io.util.ImageUtils;
 import com.gank.io.zhuangbi.ZhuangXActivity;
-import com.umeng.socialize.ShareAction;
-import com.umeng.socialize.UMShareAPI;
-import com.umeng.socialize.UMShareListener;
-import com.umeng.socialize.bean.SHARE_MEDIA;
-import com.umeng.socialize.media.UMImage;
 
 import java.util.Arrays;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class TodayGankActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, TodayContract.View {
-    private RecyclerView recyclerToadyGank;
+    @BindView(R.id.recycler_today_gank)
+    RecyclerView recyclerToadyGank;
+    @BindView(R.id.iv_today_girl)
+    ImageView ivTodayGril;
+    @BindView(R.id.toolbar_gan_today)
+    Toolbar toolbar;
+
     private TodayContract.Presenter presenter;
     private TodayGankAdapter adapter;
-    private ImageView ivTodayGril;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 //        String[] mPermissionList = new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.CALL_PHONE, Manifest.permission.READ_LOGS, Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.SET_DEBUG_APP, Manifest.permission.SYSTEM_ALERT_WINDOW, Manifest.permission.GET_ACCOUNTS};
 //        ActivityCompat.requestPermissions(TodayGankActivity.this, mPermissionList, 100);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar_gan_today);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
 
@@ -57,7 +61,6 @@ public class TodayGankActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showShareDialog();
             }
         });
 
@@ -70,12 +73,8 @@ public class TodayGankActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        ivTodayGril = (ImageView) findViewById(R.id.iv_today_girl);
-
-        recyclerToadyGank = (RecyclerView) findViewById(R.id.recycler_today_gank);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerToadyGank.setLayoutManager(linearLayoutManager);
-
         adapter = new TodayGankAdapter();
         adapter.setOnItemClickListener(new TodayGankAdapter.OnItemClickListener() {
             @Override
@@ -100,42 +99,6 @@ public class TodayGankActivity extends AppCompatActivity
     }
 
 
-    private void showShareDialog() {
-        UMImage image = new UMImage(TodayGankActivity.this, "http://www.umeng.com/images/pic/social/integrated_3.png");
-        UMShareListener listener = new UMShareListener() {
-            @Override
-            public void onResult(SHARE_MEDIA platform) {
-                Toast.makeText(TodayGankActivity.this, platform + " 分享成功啦", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onError(SHARE_MEDIA platform, Throwable t) {
-                Toast.makeText(TodayGankActivity.this, platform + " 分享失败啦", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onCancel(SHARE_MEDIA platform) {
-                Toast.makeText(TodayGankActivity.this, platform + " 分享取消了", Toast.LENGTH_SHORT).show();
-            }
-        };
-
-        final SHARE_MEDIA[] displaylist = new SHARE_MEDIA[]
-                {
-                        SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.SINA,
-                        SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE, SHARE_MEDIA.DOUBAN
-                };
-        new ShareAction(this).setDisplayList(displaylist)
-                .withText("呵呵")
-                .withTitle("title")
-                .withTargetUrl("http://www.baidu.com")
-                .withMedia(image)
-                .setListenerList(listener)
-                .open();
-
-
-    }
-
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -146,27 +109,6 @@ public class TodayGankActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -236,11 +178,5 @@ public class TodayGankActivity extends AppCompatActivity
         this.presenter = null;
     }
 
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
-    }
 
 }

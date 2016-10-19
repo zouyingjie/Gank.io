@@ -10,7 +10,7 @@ import java.util.List;
  * Created by zouyingjie on 16/9/5.
  */
 
-public class GankDayData {
+public class GankDayData  {
     public List<String> category;
     public Result results;
 

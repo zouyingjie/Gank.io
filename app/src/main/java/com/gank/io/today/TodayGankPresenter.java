@@ -74,12 +74,14 @@ public class TodayGankPresenter implements TodayContract.Presenter {
                 .flatMap(new Func1<Calendar, Observable<GankDayData>>() {
                     @Override
                     public Observable<GankDayData> call(Calendar calendar) {
-                        return getGankDayData(calendar);
+                        Observable<GankDayData> gankDayData = getGankDayData(calendar);
+                        return gankDayData;
                     }
                 })
                 .map(new Func1<GankDayData, List<GankDayItem>>() {
                     @Override
                     public List<GankDayItem> call(GankDayData dayData) {
+
                         return dayData.gankDayDataToGankItem();
                     }
                 }).subscribeOn(Schedulers.io())
@@ -95,13 +97,13 @@ public class TodayGankPresenter implements TodayContract.Presenter {
      * @return
      */
     private Observable<GankDayData> getGankDayData(Calendar c) {
-        StringBuffer buffer = new StringBuffer();
-        buffer.append(c.get(Calendar.YEAR))
+        StringBuffer date = new StringBuffer();
+        date.append(c.get(Calendar.YEAR))
                 .append("/")
                 .append(c.get(Calendar.MONTH))
                 .append("/")
                 .append(c.get(Calendar.DAY_OF_MONTH));
-        return ApiService.getGankApi().getDataByDate(buffer.toString());
+        return ApiService.getGankApi().getDataByDate(date.toString());
     }
 
     @Override

@@ -25,6 +25,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -34,11 +35,11 @@ public class GirlFragment extends Fragment implements GirlContract.View, SwipeRe
 
     private GirlPresenter presenter;
 
-//    @BindView(R.id.recycler_girl)
+    @BindView(R.id.recycler_girl)
     RecyclerView recyclerGirl;
-//    @BindView(R.id.swipe_girl)
+    @BindView(R.id.swipe_girl)
     SwipeRefreshLayout swipeGirl;
-//    @BindView(R.id.bar_gril)
+    @BindView(R.id.bar_gril)
     ProgressBar barGirl;
 
     @Inject
@@ -57,9 +58,8 @@ public class GirlFragment extends Fragment implements GirlContract.View, SwipeRe
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_blank, container, false);
         ButterKnife.bind(this, root);
-        recyclerGirl = (RecyclerView) root.findViewById(R.id.recycler_girl);
-        swipeGirl = (SwipeRefreshLayout) root.findViewById(R.id.swipe_girl);
         initRootView();
+
         return root;
     }
 
