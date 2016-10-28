@@ -45,7 +45,9 @@
             android:name=".zhuangbi.ZhuangXActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
 
-        <activity android:name=".gankdetail.GankDetailActivity"
+        <activity
+            android:name=".gankdetail.GankDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar"
             />
         <activity
             android:name=".gankdetail.GankCategoryActivity"
@@ -54,7 +56,7 @@
         <activity
             android:name=".girl.GirlImageActivity"
             android:theme="@style/AppTheme.NoActionBar"
-         />
+            />
 
     </application>
 

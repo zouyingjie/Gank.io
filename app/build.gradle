@@ -24,6 +24,9 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        jackOptions {
+            enabled true
+        }
 
     }
     buildTypes {
@@ -33,10 +36,10 @@ android {
         }
     }
 
-//    compileOptions {
-//        sourceCompatibility JavaVersion.VERSION_1_8
-//        targetCompatibility JavaVersion.VERSION_1_8
-//    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 
     signingConfigs {
 
@@ -78,4 +81,5 @@ dependencies {
     compile 'com.roughike:bottom-bar:2.0.2'
     compile 'com.android.support:support-v4:24.2.0'
     testCompile 'junit:junit:4.12'
+    compile 'com.squareup.retrofit2:adapter-java8:2.1.0'
 }

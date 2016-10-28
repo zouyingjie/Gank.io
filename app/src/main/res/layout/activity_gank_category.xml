@@ -29,7 +29,6 @@
         android:id="@+id/recycler_gank_category"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="?attr/actionBarSize"
         >
     </android.support.v7.widget.RecyclerView>
 

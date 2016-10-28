@@ -59,7 +59,6 @@ public class GirlFragment extends Fragment implements GirlContract.View, SwipeRe
         View root = inflater.inflate(R.layout.fragment_blank, container, false);
         ButterKnife.bind(this, root);
         initRootView();
-
         return root;
     }
 

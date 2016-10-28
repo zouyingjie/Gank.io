@@ -29,7 +29,6 @@ public class GirlImageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_girl_detail);
         ButterKnife.bind(this);
         initToolBar();
-
         Intent intent = getIntent();
         String desc = intent.getStringExtra("GIRL_DESC");
         String url = intent.getStringExtra("GIRL_URL");
@@ -38,8 +37,6 @@ public class GirlImageActivity extends AppCompatActivity {
                 .load(url)
                 .fitCenter()
                 .into(ivGirlDetail);
-
-
     }
 
     private void initToolBar() {

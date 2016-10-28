@@ -18,10 +18,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiService {
     private static GankApi gankApi;
     private static ZhuangImageApi zhuangXApi;
+
     private static OkHttpClient okHttpClient = new OkHttpClient();
     private static Converter.Factory gsonConverterFactory = GsonConverterFactory.create();
     private static CallAdapter.Factory rxJavaCallAdapterFactory = RxJavaCallAdapterFactory.create();
-
 
     public static GankApi getGankApi() {
         if (gankApi == null) {
@@ -29,7 +29,6 @@ public class ApiService {
         }
         return gankApi;
     }
-
 
     public static ZhuangImageApi getZhuangXApi() {
         if (zhuangXApi == null) {
@@ -46,7 +45,8 @@ public class ApiService {
                 .addConverterFactory(gsonConverterFactory)
                 .addCallAdapterFactory(rxJavaCallAdapterFactory)
                 .build();
-
         return retrofit;
     }
+
+
 }

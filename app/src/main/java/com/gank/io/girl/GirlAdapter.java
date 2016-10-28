@@ -42,6 +42,7 @@ public class GirlAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void setOnItemClickListener(@NonNull OnItemClickListener listener){
         this.listener = listener;
     }
+
     public void setImages(List<GankGirlItem> girls) {
         this.girls.addAll(girls);
         notifyItemRangeChanged(this.girls.size(), girls.size());

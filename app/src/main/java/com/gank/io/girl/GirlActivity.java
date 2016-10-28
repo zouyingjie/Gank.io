@@ -18,7 +18,6 @@ public class GirlActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolBar_girl);
         toolbar.setTitle(getResources().getString(R.string.girl_lable));
         setSupportActionBar(toolbar);
-
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
