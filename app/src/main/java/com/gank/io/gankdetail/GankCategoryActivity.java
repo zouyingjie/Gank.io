@@ -2,6 +2,7 @@ package com.gank.io.gankdetail;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,13 +25,33 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class GankCategoryActivity extends AppCompatActivity {
+    private static final String PAGE_NUMBER = "15";
+    private int page = 1;
     @BindView(R.id.recycler_gank_category)
     RecyclerView recyclerView;
     @BindView(R.id.toolbar_gank_category)
     Toolbar toolbar;
 
+    @BindView(R.id.fab_category_next_page)
+    FloatingActionButton fabNextPage;
+
     private List<GankCategory.Result> datas = new ArrayList<>();
     private CategoryAdapter adapter;
+
+    Observer<GankCategory> observer = new Observer<GankCategory>() {
+        @Override
+        public void onCompleted() {
+        }
+
+        @Override
+        public void onError(Throwable e) {
+        }
+
+        @Override
+        public void onNext(GankCategory gankCategory) {
+            adapter.setData(gankCategory.results);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +84,13 @@ public class GankCategoryActivity extends AppCompatActivity {
             }
         });
 
-
+        fabNextPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                page ++;
+                loadData();
+            }
+        });
     }
 
     @Override
@@ -73,22 +100,9 @@ public class GankCategoryActivity extends AppCompatActivity {
     }
 
     private void loadData() {
-        Observer<GankCategory> observer = new Observer<GankCategory>() {
-            @Override
-            public void onCompleted() {
-            }
 
-            @Override
-            public void onError(Throwable e) {
-            }
 
-            @Override
-            public void onNext(GankCategory gankCategory) {
-                adapter.setData(gankCategory.results);
-            }
-        };
-
-        ApiService.getGankApi().getDataByCategory(getIntent().getStringExtra("TITLE"), "20", "1")
+        ApiService.getGankApi().getDataByCategory(getIntent().getStringExtra("TITLE"), PAGE_NUMBER, String.valueOf(page))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);

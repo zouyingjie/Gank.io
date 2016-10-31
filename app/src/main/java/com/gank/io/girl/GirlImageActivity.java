@@ -8,9 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.gank.io.R;
+import com.gank.io.util.ImageUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,10 +34,14 @@ public class GirlImageActivity extends AppCompatActivity {
         String desc = intent.getStringExtra("GIRL_DESC");
         String url = intent.getStringExtra("GIRL_URL");
         ivGirlDetail.setContentDescription(desc);
-        Glide.with(this)
-                .load(url)
-                .fitCenter()
-                .into(ivGirlDetail);
+        ImageUtils.loadImageWithString(this, url, ivGirlDetail);
+        ivGirlDetail.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(GirlImageActivity.this, "123", Toast.LENGTH_LONG).show();
+                return false;
+            }
+        });
     }
 
     private void initToolBar() {

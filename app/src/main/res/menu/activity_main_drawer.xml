@@ -12,7 +12,7 @@
             android:icon="@drawable/ic_ios"
             android:title="IOS" />
         <item
-            android:id="@+id/nav_html"
+            android:id="@+id/nav_frontend"
             android:icon="@drawable/ic_html"
             android:title="前端" />
         <item

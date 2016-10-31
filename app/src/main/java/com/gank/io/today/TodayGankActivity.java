@@ -2,7 +2,6 @@ package com.gank.io.today;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -11,8 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -27,7 +26,6 @@ import com.gank.io.model.gank.GankDayItem;
 import com.gank.io.util.ImageUtils;
 import com.gank.io.zhuangbi.ZhuangXActivity;
 
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -44,6 +42,7 @@ public class TodayGankActivity extends AppCompatActivity
 
     private TodayContract.Presenter presenter;
     private TodayGankAdapter adapter;
+    private DrawerLayout drawer;
 
 
     @Override
@@ -53,18 +52,18 @@ public class TodayGankActivity extends AppCompatActivity
         ButterKnife.bind(this);
 //        String[] mPermissionList = new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.CALL_PHONE, Manifest.permission.READ_LOGS, Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.SET_DEBUG_APP, Manifest.permission.SYSTEM_ALERT_WINDOW, Manifest.permission.GET_ACCOUNTS};
 //        ActivityCompat.requestPermissions(TodayGankActivity.this, mPermissionList, 100);
+        initView();
+        this.presenter = TodayGankPresenter.getInstance(this);
+
+
+    }
+
+    private void initView() {
         toolbar = (Toolbar) findViewById(R.id.toolbar_gan_today);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            }
-        });
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -87,10 +86,7 @@ public class TodayGankActivity extends AppCompatActivity
         recyclerToadyGank.setAdapter(adapter);
 
 
-        this.presenter = TodayGankPresenter.getInstance(this);
-
     }
-
 
     @Override
     protected void onResume() {
@@ -101,7 +97,6 @@ public class TodayGankActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -109,46 +104,44 @@ public class TodayGankActivity extends AppCompatActivity
         }
     }
 
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
-        Intent intent = new Intent();
-        ;
-        if (id == R.id.nav_zhuang_x) {
-            intent.setClass(this, ZhuangXActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.nav_girl) {
-            intent.setClass(this, GirlActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.nav_android) {
-            intent.setClass(this, GankCategoryActivity.class);
-            intent.putExtra("TITLE", GankResourceType.ANDROID);
-            startActivity(intent);
-        } else if (id == R.id.nav_ios) {
-            intent.setClass(this, GankCategoryActivity.class);
-            intent.putExtra("TITLE", GankResourceType.IOS);
-            startActivity(intent);
-        } else if (id == R.id.nav_html) {
-            intent.setClass(this, GankCategoryActivity.class);
-            intent.putExtra("TITLE", GankResourceType.FRONTEND);
-            startActivity(intent);
-        } else if (id == R.id.nav_video) {
-            intent.setClass(this, GankCategoryActivity.class);
-            intent.putExtra("TITLE", GankResourceType.VIDEO);
-            startActivity(intent);
-        } else if (id == R.id.nav_extral) {
-            intent.setClass(this, GankCategoryActivity.class);
-            intent.putExtra("TITLE", GankResourceType.EXTRA);
-            startActivity(intent);
-        }
+        switch (item.getItemId()) {
+            case R.id.nav_zhuang_x:
+                startActivityWithTitle(ZhuangXActivity.class, "");
+                break;
+            case R.id.nav_girl:
+                startActivityWithTitle(GirlActivity.class, "");
+                break;
+            case R.id.nav_android:
+                startActivityWithTitle(GankCategoryActivity.class, GankResourceType.ANDROID);
+                break;
+            case R.id.nav_ios:
+                startActivityWithTitle(GankCategoryActivity.class, GankResourceType.IOS);
+                break;
+            case R.id.nav_frontend:
+                startActivityWithTitle(GankCategoryActivity.class, GankResourceType.FRONTEND);
+                break;
+            case R.id.nav_video:
+                startActivityWithTitle(GankCategoryActivity.class, GankResourceType.VIDEO);
+                break;
+            case R.id.nav_extral:
+                startActivityWithTitle(GankCategoryActivity.class, GankResourceType.EXTRA);
+                break;
 
-        Arrays.sort("123".toCharArray());
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        }
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void startActivityWithTitle(Class activity, String title) {
+        Intent intent = new Intent(this, activity);
+        if (!TextUtils.isEmpty(title)) {
+            intent.putExtra("TITLE", title);
+        }
+        startActivity(intent);
     }
 
     @Override

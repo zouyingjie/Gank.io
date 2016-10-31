@@ -67,7 +67,6 @@ public class TodayGankPresenter implements TodayContract.Presenter {
 //                .observeOn(AndroidSchedulers.mainThread())
 //                .subscribe(observer);
 
-
     }
 
     /**

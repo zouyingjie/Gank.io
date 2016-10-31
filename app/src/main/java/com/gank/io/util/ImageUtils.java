@@ -12,34 +12,34 @@ import com.bumptech.glide.Glide;
  */
 
 public class ImageUtils {
-    public static void loadImageWithString(Context context, String uri, ImageView imageView) {
+    public static void loadImageWithString(Context context, String url, ImageView imageView) {
         Glide.with(context)
-                .load(uri)
+                .load(url)
                 .centerCrop()
                 .crossFade()
                 .into(imageView);
     }
 
-    public static void loadImageWithUri(Context context, Uri uri, ImageView imageView) {
+    public static void loadImageWithUri(Context context, Uri url, ImageView imageView) {
         Glide.with(context)
-                .load(uri)
+                .load(url)
                 .centerCrop()
                 .crossFade()
                 .into(imageView);
     }
 
-    public static void loadImageWithPlaceholder(Context context, String uri, ImageView imageView, Drawable drawable) {
+    public static void loadImageWithPlaceholder(Context context, String url, ImageView imageView, Drawable drawable) {
         Glide.with(context)
-                .load(uri)
+                .load(url)
                 .centerCrop()
                 .crossFade()
                 .placeholder(drawable)
                 .into(imageView);
     }
 
-    public static void loadGifWithPlaceholder(Context context, String uri, ImageView imageView, Drawable drawable) {
+    public static void loadGifWithPlaceholder(Context context, String url, ImageView imageView, Drawable drawable) {
         Glide.with(context)
-                .load(uri)
+                .load(url)
                 .asGif()
                 .centerCrop()
                 .crossFade()
@@ -47,17 +47,17 @@ public class ImageUtils {
                 .into(imageView);
     }
 
-    public static void loadGif(Context context, String uri, ImageView imageView) {
+    public static void loadGif(Context context, String url, ImageView imageView) {
         Glide.with(context)
-                .load(uri)
+                .load(url)
                 .asGif()
                 .centerCrop()
                 .crossFade()
                 .into(imageView);
     }
 
-    public static boolean isGif(String uri){
-        if (uri.contains(".gif")){
+    public static boolean isGif(String url){
+        if (url.contains(".gif")){
             return true;
         }else {
             return false;

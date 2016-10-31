@@ -41,7 +41,6 @@ public class CategoryAdapter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.gank_content_title_item, parent, false);
         VH holder = new VH(view);
-
         return holder;
     }
 
