@@ -2,10 +2,8 @@ package com.gank.io.girl;
 
 
 import android.annotation.SuppressLint;
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.gank.io.R;
+import com.gank.io.base.BaseActivity;
 import com.gank.io.model.girl.GankGirlItem;
 
 import java.util.ArrayList;
@@ -39,7 +38,6 @@ public class GirlFragment extends Fragment implements GirlContract.View, SwipeRe
     SwipeRefreshLayout swipeGirl;
     @BindView(R.id.bar_gril)
     ProgressBar barGirl;
-//    @Inject
     GirlAdapter adapter;
 
     private ArrayList<GankGirlItem> girls = new ArrayList<GankGirlItem>();
@@ -94,16 +92,13 @@ public class GirlFragment extends Fragment implements GirlContract.View, SwipeRe
         adapter.setOnItemClickListener(new GirlAdapter.OnItemClickListener() {
             @Override
             public void onItemClickListener(View v, int position) {
+                v.setTransitionName("robot");
                 GankGirlItem item = girls.get(position);
                 Intent intent = new Intent(getActivity(), GirlImageActivity.class);
                 intent.putExtra("GIRL_DESC", item.description);
                 intent.putExtra("GIRL_URL", item.imageUrl);
-                if (Build.VERSION.SDK_INT > 21) {
-                    startActivity(intent, ActivityOptions
-                            .makeSceneTransitionAnimation(getActivity(), v, "robot").toBundle());
-                } else {
-                    startActivity(intent);
-                }
+                startActivity(intent);
+
 
             }
         });
@@ -137,6 +132,12 @@ public class GirlFragment extends Fragment implements GirlContract.View, SwipeRe
     public void removePresenter() {
         presenter = null;
     }
+
+    @Override
+    public void showToastTip() {
+        ((BaseActivity)getActivity()).showNetToastTip();
+    }
+
 
     @Override
     public void onRefresh() {

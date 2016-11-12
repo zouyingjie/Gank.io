@@ -15,9 +15,10 @@ public class ImageUtils {
     public static void loadImageWithString(Context context, String url, ImageView imageView) {
         Glide.with(context)
                 .load(url)
-                .centerCrop()
+                .fitCenter()
                 .crossFade()
                 .into(imageView);
+        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
     }
 
     public static void loadImageWithUri(Context context, Uri url, ImageView imageView) {
@@ -26,6 +27,7 @@ public class ImageUtils {
                 .centerCrop()
                 .crossFade()
                 .into(imageView);
+        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
     }
 
     public static void loadImageWithPlaceholder(Context context, String url, ImageView imageView, Drawable drawable) {

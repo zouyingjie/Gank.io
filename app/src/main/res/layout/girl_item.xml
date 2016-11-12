@@ -20,7 +20,6 @@
             android:id="@+id/iv_girl"
             android:layout_width="match_parent"
             android:layout_height="160dp"
-            android:transitionName="robot"
             fresco:placeholderImage="@mipmap/ic_launcher"/>
 
         <TextView

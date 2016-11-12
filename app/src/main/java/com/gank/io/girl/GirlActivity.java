@@ -2,13 +2,13 @@ package com.gank.io.girl;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.gank.io.R;
+import com.gank.io.base.BaseActivity;
 
-public class GirlActivity extends AppCompatActivity {
+public class GirlActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

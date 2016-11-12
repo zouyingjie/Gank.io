@@ -31,7 +31,7 @@ public class TodayGankPresenter implements TodayContract.Presenter {
 
         @Override
         public void onError(Throwable e) {
-            todayGankView.showErrorTip();
+            todayGankView.showToastTip();
         }
 
         @Override
@@ -51,7 +51,7 @@ public class TodayGankPresenter implements TodayContract.Presenter {
     @Override
     public void loadTodayGankData() {
         unsubscribe();
-        //Lambda表达式或者方法引用以简化代码,但也会降低代码的可读性,两者之间取舍
+        //Lambda表达式或者方法引用以简化代码,但也会降低代码的可读性,两者之间合理取舍
         ApiService.getGankApi().getHistoryDate()
                 .map(gankDate -> gankDate.getLastDate())
                 .flatMap(calendar -> getGankDayData(calendar))
@@ -59,14 +59,6 @@ public class TodayGankPresenter implements TodayContract.Presenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
-//        ApiService.getGankApi().getHistoryDate()
-//                .map(GankDate::getLastDate)
-//                .flatMap(this::getGankDayData)
-//                .map(GankDayData::gankDayDataToGankItem)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(observer);
-
     }
 
     /**

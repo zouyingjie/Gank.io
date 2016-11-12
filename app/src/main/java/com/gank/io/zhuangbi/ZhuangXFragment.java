@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.gank.io.R;
+import com.gank.io.base.BaseActivity;
 import com.gank.io.model.ZhuangXImage;
 
 import java.util.ArrayList;
@@ -85,5 +86,10 @@ public class ZhuangXFragment extends Fragment implements ZhuangXContract.View{
     @Override
     public void removePresenter() {
         presenter = null;
+    }
+
+    @Override
+    public void showToastTip() {
+        ((BaseActivity)getActivity()).showNetToastTip();
     }
 }

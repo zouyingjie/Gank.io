@@ -48,7 +48,7 @@ public class ZhuangXPresenter implements ZhuangXContract.Presenter {
 
             @Override
             public void onFailure(Call<List<ZhuangXImage>> call, Throwable t) {
-
+                zhuagnxView.showToastTip();
             }
         });
 

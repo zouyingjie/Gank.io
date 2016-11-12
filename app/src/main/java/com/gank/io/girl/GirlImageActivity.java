@@ -4,19 +4,18 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.gank.io.R;
+import com.gank.io.base.BaseActivity;
 import com.gank.io.util.ImageUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class GirlImageActivity extends AppCompatActivity {
+public class GirlImageActivity extends BaseActivity {
 
     @BindView(R.id.iv_girl_detail)
     ImageView ivGirlDetail;
@@ -35,13 +34,6 @@ public class GirlImageActivity extends AppCompatActivity {
         String url = intent.getStringExtra("GIRL_URL");
         ivGirlDetail.setContentDescription(desc);
         ImageUtils.loadImageWithString(this, url, ivGirlDetail);
-        ivGirlDetail.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                Toast.makeText(GirlImageActivity.this, "123", Toast.LENGTH_LONG).show();
-                return false;
-            }
-        });
     }
 
     private void initToolBar() {
