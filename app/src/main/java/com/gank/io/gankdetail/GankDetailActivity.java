@@ -1,5 +1,6 @@
 package com.gank.io.gankdetail;
 
+import android.annotation.TargetApi;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 
 import com.gank.io.R;
 import com.gank.io.constant.Contants;
@@ -22,16 +24,18 @@ public class GankDetailActivity extends AppCompatActivity {
 
     @BindView(R.id.web_gank_detail)
     WebView webView;
-    //    @BindView(R.id.progressbar_load)
-//    ProgressBar progressBarLoad;
+    @BindView(R.id.progress_bar_gank_detail)
+    ProgressBar progressBarGankDetail;
     @BindView(R.id.toolbar_gank_detail)
     Toolbar toolbarGankDetail;
 
+    @TargetApi(Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gank_detail);
         ButterKnife.bind(this);
+
 
         toolbarGankDetail.setTitle("Gank Detail");
         setSupportActionBar(toolbarGankDetail);
@@ -44,7 +48,7 @@ public class GankDetailActivity extends AppCompatActivity {
             }
         });
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
+            getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark, getTheme()));
         }
 
         initWebView();
@@ -57,16 +61,19 @@ public class GankDetailActivity extends AppCompatActivity {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
+                progressBarGankDetail.setVisibility(View.GONE);
             }
 
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
+                progressBarGankDetail.setVisibility(View.GONE);
             }
 
             @Override
             public void onLoadResource(WebView view, String url) {
                 super.onLoadResource(view, url);
+
             }
 
             @Override
@@ -75,5 +82,6 @@ public class GankDetailActivity extends AppCompatActivity {
             }
         };
         webView.setWebViewClient(client);
+
     }
 }

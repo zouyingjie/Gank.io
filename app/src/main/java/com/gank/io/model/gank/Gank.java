@@ -5,12 +5,12 @@ package com.gank.io.model.gank;
  */
 
 public class Gank {
-    public String _id;
+    String _id;
     public String createdAt;
     public String desc;
-    public String publishedAt;
-    public String type;
+    String publishedAt;
+    String type;
     public String url;
-    public String used;
-    public String who;
+    String used;
+    String who;
 }

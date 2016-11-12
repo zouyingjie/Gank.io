@@ -9,7 +9,7 @@ import java.util.List;
 
 public class GankDayContentItem extends Gank implements GankDayItem {
 
-    public GankDayContentItem(Gank gank){
+    private GankDayContentItem(Gank gank){
         this._id = gank._id;
         this.createdAt = gank.createdAt;
         this.desc = gank.desc;

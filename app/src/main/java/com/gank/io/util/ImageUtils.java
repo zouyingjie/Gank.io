@@ -57,10 +57,6 @@ public class ImageUtils {
     }
 
     public static boolean isGif(String url){
-        if (url.contains(".gif")){
-            return true;
-        }else {
-            return false;
-        }
+        return url.contains(".gif");
     }
 }

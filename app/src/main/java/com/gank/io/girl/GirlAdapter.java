@@ -50,12 +50,11 @@ public class GirlAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         CardView cardView = (CardView) LayoutInflater.from(context).inflate(R.layout.girl_item, parent, false);
-        GirlHolder holder = new GirlHolder(cardView);
-        return holder;
+        return  new GirlHolder(cardView);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         GankGirlItem girlItem = girls.get(position);
         ImageUtils.loadImageWithString(context, girlItem.imageUrl, ((GirlHolder) holder).ivGirl);
         ((GirlHolder) holder).tvDescription.setText(girlItem.description);

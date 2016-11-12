@@ -5,24 +5,24 @@
         <item
 
             android:icon="@drawable/ic_android"
-            android:title="Android"
+            android:title="@string/title_android"
             android:id="@+id/nav_android"/>
         <item
             android:id="@+id/nav_ios"
             android:icon="@drawable/ic_ios"
-            android:title="IOS" />
+            android:title="@string/title_ios" />
         <item
             android:id="@+id/nav_frontend"
             android:icon="@drawable/ic_html"
-            android:title="前端" />
+            android:title="@string/title_front" />
         <item
             android:id="@+id/nav_video"
             android:icon="@drawable/ic_vedio"
-            android:title="视频" />
+            android:title="@string/title_video" />
         <item
             android:id="@+id/nav_extral"
             android:icon="@drawable/ic_extra"
-            android:title="拓展资源" />
+            android:title="@string/title_extra" />
     </group>
 
 

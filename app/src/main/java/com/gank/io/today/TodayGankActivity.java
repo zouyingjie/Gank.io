@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 import com.gank.io.R;
 import com.gank.io.constant.Contants;
-import com.gank.io.constant.GankResourceType;
 import com.gank.io.gankdetail.GankCategoryActivity;
 import com.gank.io.gankdetail.GankDetailActivity;
 import com.gank.io.girl.GirlActivity;
@@ -33,37 +32,28 @@ import butterknife.ButterKnife;
 
 public class TodayGankActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, TodayContract.View {
-    @BindView(R.id.recycler_today_gank)
-    RecyclerView recyclerToadyGank;
-    @BindView(R.id.iv_today_girl)
-    ImageView ivTodayGril;
-    @BindView(R.id.toolbar_gan_today)
-    Toolbar toolbar;
 
     private TodayContract.Presenter presenter;
     private TodayGankAdapter adapter;
-    private DrawerLayout drawer;
 
+    @BindView(R.id.recycler_today_gank)RecyclerView recyclerToadyGank;
+    @BindView(R.id.iv_today_girl)ImageView ivTodayGril;
+    @BindView(R.id.toolbar_gan_today)Toolbar toolbar;
+    @BindView(R.id.drawer_layout) DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-//        String[] mPermissionList = new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.CALL_PHONE, Manifest.permission.READ_LOGS, Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.SET_DEBUG_APP, Manifest.permission.SYSTEM_ALERT_WINDOW, Manifest.permission.GET_ACCOUNTS};
-//        ActivityCompat.requestPermissions(TodayGankActivity.this, mPermissionList, 100);
         initView();
         this.presenter = TodayGankPresenter.getInstance(this);
-
-
     }
 
     private void initView() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar_gan_today);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
 
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -91,6 +81,9 @@ public class TodayGankActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
+        if (TextUtils.isEmpty(getSupportActionBar().getTitle().toString())){
+            getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
+        }
         presenter.loadTodayGankData();
     }
 
@@ -116,19 +109,19 @@ public class TodayGankActivity extends AppCompatActivity
                 startActivityWithTitle(GirlActivity.class, "");
                 break;
             case R.id.nav_android:
-                startActivityWithTitle(GankCategoryActivity.class, GankResourceType.ANDROID);
+                startActivityWithTitle(GankCategoryActivity.class, Contants.GANK_RESOUSE_TYPE_ANDROID);
                 break;
             case R.id.nav_ios:
-                startActivityWithTitle(GankCategoryActivity.class, GankResourceType.IOS);
+                startActivityWithTitle(GankCategoryActivity.class, Contants.GANK_RESOUSE_TYPE_IOS);
                 break;
             case R.id.nav_frontend:
-                startActivityWithTitle(GankCategoryActivity.class, GankResourceType.FRONTEND);
+                startActivityWithTitle(GankCategoryActivity.class, Contants.GANK_RESOUSE_TYPE_FRONTEND);
                 break;
             case R.id.nav_video:
-                startActivityWithTitle(GankCategoryActivity.class, GankResourceType.VIDEO);
+                startActivityWithTitle(GankCategoryActivity.class, Contants.GANK_RESOUSE_TYPE_VIDEO);
                 break;
             case R.id.nav_extral:
-                startActivityWithTitle(GankCategoryActivity.class, GankResourceType.EXTRA);
+                startActivityWithTitle(GankCategoryActivity.class, Contants.GANK_RESOUSE_TYPE_EXTRA);
                 break;
 
         }
@@ -150,10 +143,6 @@ public class TodayGankActivity extends AppCompatActivity
         adapter.setData(gankDayItems);
     }
 
-    @Override
-    public void setTodayGirl(String url) {
-
-    }
 
     @Override
     public void showErrorTip() {

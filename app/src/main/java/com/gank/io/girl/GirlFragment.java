@@ -23,8 +23,6 @@ import com.gank.io.model.girl.GankGirlItem;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -41,17 +39,14 @@ public class GirlFragment extends Fragment implements GirlContract.View, SwipeRe
     SwipeRefreshLayout swipeGirl;
     @BindView(R.id.bar_gril)
     ProgressBar barGirl;
-
-    @Inject
+//    @Inject
     GirlAdapter adapter;
 
     private ArrayList<GankGirlItem> girls = new ArrayList<GankGirlItem>();
 
 
     public GirlFragment() {
-        // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -103,10 +98,10 @@ public class GirlFragment extends Fragment implements GirlContract.View, SwipeRe
                 Intent intent = new Intent(getActivity(), GirlImageActivity.class);
                 intent.putExtra("GIRL_DESC", item.description);
                 intent.putExtra("GIRL_URL", item.imageUrl);
-                if (Build.VERSION.SDK_INT > 21){
+                if (Build.VERSION.SDK_INT > 21) {
                     startActivity(intent, ActivityOptions
                             .makeSceneTransitionAnimation(getActivity(), v, "robot").toBundle());
-                }else {
+                } else {
                     startActivity(intent);
                 }
 

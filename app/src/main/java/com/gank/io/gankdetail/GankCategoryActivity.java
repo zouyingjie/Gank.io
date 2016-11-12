@@ -25,20 +25,18 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class GankCategoryActivity extends AppCompatActivity {
+
     private static final String PAGE_NUMBER = "15";
     private int page = 1;
-    @BindView(R.id.recycler_gank_category)
-    RecyclerView recyclerView;
-    @BindView(R.id.toolbar_gank_category)
-    Toolbar toolbar;
 
-    @BindView(R.id.fab_category_next_page)
-    FloatingActionButton fabNextPage;
+    @BindView(R.id.recycler_gank_category)RecyclerView recyclerView;
+    @BindView(R.id.toolbar_gank_category)Toolbar toolbar;
+    @BindView(R.id.fab_category_next_page)FloatingActionButton fabNextPage;
 
     private List<GankCategory.Result> datas = new ArrayList<>();
     private CategoryAdapter adapter;
 
-    Observer<GankCategory> observer = new Observer<GankCategory>() {
+    private Observer<GankCategory> observer = new Observer<GankCategory>() {
         @Override
         public void onCompleted() {
         }

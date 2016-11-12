@@ -36,8 +36,7 @@ public class ZhuangXAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public VH onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.girl_item, parent, false);
-        VH holder = new VH(view);
-        return holder;
+        return new VH(view);
     }
 
     @Override

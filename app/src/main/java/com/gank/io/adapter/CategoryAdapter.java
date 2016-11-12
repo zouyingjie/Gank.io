@@ -40,12 +40,11 @@ public class CategoryAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.gank_content_title_item, parent, false);
-        VH holder = new VH(view);
-        return holder;
+        return new VH(view);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ((VH) holder).textView.setText(results.get(position).desc);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

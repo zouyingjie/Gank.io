@@ -9,7 +9,7 @@ import java.util.List;
 
 public class GankDate {
     public String error;
-    public List<String> results;
+    private List<String> results;
 
     public Calendar getLastDate() {
         String[] date = this.results.get(0).split("-");

@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     >
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar_gank_detail"
         android:layout_width="match_parent"
@@ -14,6 +15,7 @@
         android:theme="@style/AppTheme.AppBarOverlay"
 
         >
+
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar_gank_detail"
             android:layout_width="match_parent"
@@ -25,12 +27,25 @@
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
-    <WebView
-        android:id="@+id/web_gank_detail"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:layout_constraintTop_toBottomOf="@id/appbar_gank_detail"
         >
-    </WebView>
+
+        <WebView
+            android:id="@+id/web_gank_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+        </WebView>
+        <ProgressBar
+            android:id="@+id/progress_bar_gank_detail"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_gravity="center"
+            />
+    </FrameLayout>
+
 
 </android.support.constraint.ConstraintLayout>
