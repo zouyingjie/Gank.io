@@ -1,8 +1,2 @@
 # Gank.io
-One Gank android client to practice some knowledge,
-* MVP
-* Glide
-* RxJava + Retrofit
-* Dragger2
-* RecyclerView
-
+学习MVP架构以及RxJava+Retrofit练习写的一个Gank客户端
