@@ -1,4 +1,4 @@
-package com.gank.io.adapter;
+package com.gank.io.gankdetail;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

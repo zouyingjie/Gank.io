@@ -1,7 +1,12 @@
 package com.gank.io.today;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -11,7 +16,10 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.gank.io.R;
 import com.gank.io.base.BaseActivity;
@@ -24,6 +32,7 @@ import com.gank.io.model.gank.GankDayItem;
 import com.gank.io.util.ImageUtils;
 import com.gank.io.zhuangbi.ZhuangXActivity;
 
+import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
@@ -32,13 +41,24 @@ import butterknife.ButterKnife;
 public class TodayGankActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener, TodayContract.View {
 
+
     private TodayContract.Presenter presenter;
     private TodayGankAdapter adapter;
 
-    @BindView(R.id.recycler_today_gank)RecyclerView recyclerToadyGank;
-    @BindView(R.id.iv_today_girl)ImageView ivTodayGril;
-    @BindView(R.id.toolbar_gan_today)Toolbar toolbar;
-    @BindView(R.id.drawer_layout) DrawerLayout drawer;
+    @BindView(R.id.appbar_gank_today)
+    AppBarLayout appbarGankToday;
+    @BindView(R.id.fab_select_gank_date)
+    FloatingActionButton fabSelectGankDate;
+    @BindView(R.id.recycler_today_gank)
+    RecyclerView recyclerToadyGank;
+    @BindView(R.id.iv_today_girl)
+    ImageView ivTodayGril;
+    @BindView(R.id.toolbar_gank_today)
+    Toolbar toolbarGankToday;
+    @BindView(R.id.drawer_gank_today)
+    DrawerLayout drawerGankToday;
+    @BindView(R.id.main_collapsing)
+    CollapsingToolbarLayout collapsingToolbarLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,13 +70,12 @@ public class TodayGankActivity extends BaseActivity
     }
 
     private void initView() {
-        setSupportActionBar(toolbar);
-//        getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
-
+        setSupportActionBar(toolbarGankToday);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
+                this, drawerGankToday, toolbarGankToday, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerGankToday.addDrawerListener(toggle);
         toggle.syncState();
+
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -74,29 +93,50 @@ public class TodayGankActivity extends BaseActivity
         });
         recyclerToadyGank.setAdapter(adapter);
 
+        fabSelectGankDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showCalendar();
+            }
+        });
+    }
+
+    private void showCalendar() {
+        DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                Calendar c = Calendar.getInstance();
+                c.set(Calendar.YEAR,year);
+                c.set(Calendar.MONTH, month);
+                c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                presenter.loadData(c);
+
+            }
+        };
+        Calendar c = Calendar.getInstance();
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, listener, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+        DatePicker datePicker = datePickerDialog.getDatePicker();
+        datePicker.setMaxDate(c.getTimeInMillis());
+        datePickerDialog.show();
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (TextUtils.isEmpty(getSupportActionBar().getTitle().toString())){
-            getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
-        }
         presenter.loadTodayGankData();
     }
 
 
     @Override
     public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+        if (drawerGankToday.isDrawerOpen(GravityCompat.START)) {
+            drawerGankToday.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -123,7 +163,7 @@ public class TodayGankActivity extends BaseActivity
                 break;
 
         }
-        drawer.closeDrawer(GravityCompat.START);
+        drawerGankToday.closeDrawer(GravityCompat.START);
         return true;
     }
 
@@ -136,10 +176,15 @@ public class TodayGankActivity extends BaseActivity
     }
 
     @Override
-    public void loadTodayGankData(List<GankDayItem> gankDayItems) {
-        String imgUrl = ((GankDayContentItem) gankDayItems.remove(gankDayItems.size() - 1)).url;
-        ImageUtils.loadImageWithString(this, imgUrl, ivTodayGril);
-        adapter.setData(gankDayItems);
+    public void loadTodayGankData(@NonNull List<GankDayItem> gankDayItems) {
+        if (gankDayItems.size() > 0){
+            String imgUrl = ((GankDayContentItem) gankDayItems.remove(gankDayItems.size() - 1)).url;
+            ImageUtils.loadImageWithString(this, imgUrl, ivTodayGril);
+            adapter.setData(gankDayItems);
+        }else {
+            Toast.makeText(this, "这一天没有数据哦",Toast.LENGTH_SHORT).show();
+        }
+
     }
 
 
@@ -154,9 +199,12 @@ public class TodayGankActivity extends BaseActivity
     }
 
     @Override
-    public void showToastTip() {
-        showNetToastTip();
+    public void showToastTip(String tip) {
+//        showToastTip(tip);
+        super.showToastTip(tip);
+//        Toast.makeText(this, tip, Toast.LENGTH_SHORT).show();
     }
+
 
 
 }

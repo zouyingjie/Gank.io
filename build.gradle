@@ -1,20 +1,22 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 apply from: 'buildproject/config.gradle'
 
+tasks.whenTaskAdded { task ->
+    if (task.name.equals("lint")) {
+        task.enabled = false
+    }
+}
+
 buildscript {
     repositories {
         jcenter()//指定jcenter代码仓库
     }
     dependencies {//指定依赖的插件版本
         classpath 'com.android.tools.build:gradle:2.2.0'
-//        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
     }
 }
 
-allprojects {//这里指定为项目整体配置的一些内容,这里也指定了
-    //中央代码仓库为jcenter
+allprojects {
     repositories {
         jcenter()
     }
@@ -24,4 +26,9 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
+tasks.whenTaskAdded { task ->
+    if (task.name.equals("lint")) {
+        task.enabled = false
+    }
+}
 

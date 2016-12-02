@@ -8,7 +8,7 @@ import android.widget.Toast;
  */
 
 public class BaseActivity extends AppCompatActivity {
-    public void showNetToastTip(){
-        Toast.makeText(this, "加载数据失败,请重试", Toast.LENGTH_SHORT).show();
+    public void showToastTip(String tip) {
+        Toast.makeText(this, tip, Toast.LENGTH_SHORT).show();
     }
 }

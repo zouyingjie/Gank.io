@@ -1,7 +1,9 @@
 package com.gank.io.zhuangbi;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.gank.io.R;
 import com.gank.io.model.ZhuangXImage;
 import com.gank.io.network.ApiService;
 
@@ -48,7 +50,7 @@ public class ZhuangXPresenter implements ZhuangXContract.Presenter {
 
             @Override
             public void onFailure(Call<List<ZhuangXImage>> call, Throwable t) {
-                zhuagnxView.showToastTip();
+                zhuagnxView.showToastTip(((Context)zhuagnxView).getString(R.string.access_data_fail_tip));
             }
         });
 

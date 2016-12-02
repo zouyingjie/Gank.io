@@ -17,6 +17,14 @@ android {
     compileSdkVersion rootProject.ext.androidCompileSdkVersion
     buildToolsVersion rootProject.ext.androidBuildToolsVersion
 
+    lintOptions {
+        disable 'InvalidPackage'
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
+
     defaultConfig {
         applicationId "com.gank.io"
         minSdkVersion rootProject.ext.androidMinSdkVersion
@@ -34,6 +42,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
+        xys {
+            applicationIdSuffix ".xys"
+        }
     }
 
     compileOptions {
@@ -41,9 +53,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    signingConfigs {
 
-    }
 
 }
 
@@ -71,11 +81,16 @@ dependencies {
     compile dependency['annotation']
     compile dependency['cardview']
     compile dependency['glide']
+    compile dependency['glide']
+
     annotationProcessor dependency['butterknifeCompiler']
     annotationProcessor dependency['draggerCompiler']
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha7'
-    compile 'com.roughike:bottom-bar:2.0.2'
     compile 'com.android.support:support-v4:25.0.0'
     testCompile 'junit:junit:4.12'
-    compile 'com.squareup.retrofit2:adapter-java8:2.1.0'
+
+    compile dependency['leakcanaryDebug']
+//    releaseCompile dependency['leakcanaryRelease']
+//    testCompile dependency['leakcanaryTest']
+
 }

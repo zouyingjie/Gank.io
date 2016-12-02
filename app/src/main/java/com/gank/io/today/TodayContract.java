@@ -4,6 +4,7 @@ import com.gank.io.base.BasePresenter;
 import com.gank.io.base.BaseView;
 import com.gank.io.model.gank.GankDayItem;
 
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -15,6 +16,8 @@ public class TodayContract {
     public interface Presenter extends BasePresenter {
 
         void loadTodayGankData();
+
+        void loadData(Calendar c);
 
         void unsubscribe();
 

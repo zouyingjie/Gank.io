@@ -21,4 +21,5 @@
     <string name="title_video">视频</string>
     <string name="title_extra">拓展资源</string>
     <string name="loading">正在加载</string>
+    <string name="access_data_fail_tip">没有获取到数据哦,请在试一下下鸟~muA</string>
 </resources>

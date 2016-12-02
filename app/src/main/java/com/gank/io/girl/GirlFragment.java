@@ -31,6 +31,8 @@ import butterknife.ButterKnife;
 public class GirlFragment extends Fragment implements GirlContract.View, SwipeRefreshLayout.OnRefreshListener {
 
     private GirlPresenter presenter;
+    private ArrayList<GankGirlItem> girls = new ArrayList<GankGirlItem>();
+    GirlAdapter adapter;
 
     @BindView(R.id.recycler_girl)
     RecyclerView recyclerGirl;
@@ -38,18 +40,13 @@ public class GirlFragment extends Fragment implements GirlContract.View, SwipeRe
     SwipeRefreshLayout swipeGirl;
     @BindView(R.id.bar_gril)
     ProgressBar barGirl;
-    GirlAdapter adapter;
 
-    private ArrayList<GankGirlItem> girls = new ArrayList<GankGirlItem>();
-
-
-    public GirlFragment() {
-    }
+    public GirlFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_blank, container, false);
+        View root = inflater.inflate(R.layout.fragment_girl, container, false);
         ButterKnife.bind(this, root);
         initRootView();
         return root;
@@ -61,10 +58,6 @@ public class GirlFragment extends Fragment implements GirlContract.View, SwipeRe
         presenter.loadImage();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
 
     @SuppressLint("NewApi")
     private void initRootView() {
@@ -72,9 +65,10 @@ public class GirlFragment extends Fragment implements GirlContract.View, SwipeRe
         swipeGirl.setEnabled(false);
 
         adapter = new GirlAdapter(getContext(), girls);
-        final GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         recyclerGirl.setLayoutManager(layoutManager);
         recyclerGirl.setAdapter(adapter);
+
         recyclerGirl.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -98,8 +92,6 @@ public class GirlFragment extends Fragment implements GirlContract.View, SwipeRe
                 intent.putExtra("GIRL_DESC", item.description);
                 intent.putExtra("GIRL_URL", item.imageUrl);
                 startActivity(intent);
-
-
             }
         });
     }
@@ -134,8 +126,8 @@ public class GirlFragment extends Fragment implements GirlContract.View, SwipeRe
     }
 
     @Override
-    public void showToastTip() {
-        ((BaseActivity)getActivity()).showNetToastTip();
+    public void showToastTip(String tip) {
+        ((BaseActivity) getActivity()).showToastTip(tip);
     }
 
 

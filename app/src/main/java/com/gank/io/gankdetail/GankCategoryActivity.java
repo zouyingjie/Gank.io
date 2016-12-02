@@ -12,7 +12,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.gank.io.R;
-import com.gank.io.adapter.CategoryAdapter;
 import com.gank.io.base.BaseActivity;
 import com.gank.io.model.gank.GankCategory;
 import com.gank.io.network.ApiService;
@@ -50,13 +49,13 @@ public class GankCategoryActivity extends BaseActivity {
 
         @Override
         public void onError(Throwable e) {
-            swipeGankCategory.setEnabled(false);
-            showNetToastTip();
+            swipeGankCategory.setRefreshing(false);
+            showToastTip("加载数据失败");
         }
 
         @Override
         public void onNext(GankCategory gankCategory) {
-            swipeGankCategory.setEnabled(false);
+            swipeGankCategory.setRefreshing(false);
             adapter.setData(gankCategory.results);
         }
     };

@@ -89,7 +89,7 @@ public class ZhuangXFragment extends Fragment implements ZhuangXContract.View{
     }
 
     @Override
-    public void showToastTip() {
-        ((BaseActivity)getActivity()).showNetToastTip();
+    public void showToastTip(String tip) {
+        ((ZhuangXActivity)getActivity()).showToastTip(tip);
     }
 }

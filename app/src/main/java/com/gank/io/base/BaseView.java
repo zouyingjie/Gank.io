@@ -9,5 +9,5 @@ public interface  BaseView<T> {
 
     void removePresenter();
 
-    void showToastTip();
+    void showToastTip(String tip);
 }

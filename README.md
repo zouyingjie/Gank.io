@@ -5,4 +5,7 @@ One Gank android client to practice some knowledge,
 * RxJava + Retrofit
 * Dragger2
 * RecyclerView
+* Java8
+
+
 

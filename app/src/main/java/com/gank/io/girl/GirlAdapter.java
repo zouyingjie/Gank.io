@@ -26,8 +26,7 @@ public class GirlAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
     private ArrayList<GankGirlItem> girls;
 
-    public GirlAdapter() {
-    }
+    public GirlAdapter() {}
 
     public GirlAdapter(Context context, ArrayList<GankGirlItem> girls) {
         this.context = context;
@@ -35,9 +34,6 @@ public class GirlAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     private OnItemClickListener listener;
-    interface OnItemClickListener{
-        void onItemClickListener(View v, int position);
-    }
 
     public void setOnItemClickListener(@NonNull OnItemClickListener listener){
         this.listener = listener;
@@ -83,6 +79,11 @@ public class GirlAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             ivGirl = (ImageView) itemView.findViewById(R.id.iv_girl);
             tvDescription = (TextView) itemView.findViewById(R.id.tv_girl_description);
         }
+    }
+
+
+    interface OnItemClickListener{
+        void onItemClickListener(View v, int position);
     }
 
 }

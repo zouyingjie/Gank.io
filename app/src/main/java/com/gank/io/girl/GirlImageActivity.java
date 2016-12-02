@@ -29,6 +29,7 @@ public class GirlImageActivity extends BaseActivity {
         setContentView(R.layout.activity_girl_detail);
         ButterKnife.bind(this);
         initToolBar();
+
         Intent intent = getIntent();
         String desc = intent.getStringExtra("GIRL_DESC");
         String url = intent.getStringExtra("GIRL_URL");
@@ -40,7 +41,9 @@ public class GirlImageActivity extends BaseActivity {
         toolbar.setTitle("Girl");
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
