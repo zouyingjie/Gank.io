@@ -25,15 +25,17 @@ import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+import static com.gank.io.R.id.swipe_gank_category;
+
 public class GankCategoryActivity extends BaseActivity {
 
-    private static final String PAGE_NUMBER = "15";
+    private static final String PAGE_NUMBER = "10";
 
     private int page = 1;
     private List<GankCategory.Result> datas = new ArrayList<>();
     private CategoryAdapter adapter;
 
-    @BindView(R.id.swipe_gank_category)
+    @BindView(swipe_gank_category)
     SwipeRefreshLayout swipeGankCategory;
     @BindView(R.id.recycler_gank_category)
     RecyclerView recyclerView;
@@ -50,7 +52,7 @@ public class GankCategoryActivity extends BaseActivity {
         @Override
         public void onError(Throwable e) {
             swipeGankCategory.setRefreshing(false);
-            showToastTip("加载数据失败");
+            showToastTip(getResources().getString(R.string.access_data_fail_tip));
         }
 
         @Override
@@ -78,7 +80,6 @@ public class GankCategoryActivity extends BaseActivity {
         });
 
         swipeGankCategory.setColorSchemeColors(Color.BLUE, Color.GREEN, Color.RED, Color.YELLOW);
-        swipeGankCategory.setEnabled(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new CategoryAdapter(this, datas);
         recyclerView.setAdapter(adapter);
@@ -94,7 +95,6 @@ public class GankCategoryActivity extends BaseActivity {
         fabNextPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                swipeGankCategory.setEnabled(true);
                 swipeGankCategory.setRefreshing(true);
                 page++;
                 loadData();
@@ -109,7 +109,7 @@ public class GankCategoryActivity extends BaseActivity {
     }
 
     private void loadData() {
-
+        swipeGankCategory.setRefreshing(true);
         ApiService.getGankApi().getDataByCategory(getIntent().getStringExtra("TITLE"), PAGE_NUMBER, String.valueOf(page))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

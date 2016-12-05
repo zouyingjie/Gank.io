@@ -124,6 +124,7 @@ public class TodayGankActivity extends BaseActivity
     @Override
     protected void onResume() {
         super.onResume();
+        initView();
         presenter.loadTodayGankData();
     }
 
@@ -182,7 +183,7 @@ public class TodayGankActivity extends BaseActivity
             ImageUtils.loadImageWithString(this, imgUrl, ivTodayGril);
             adapter.setData(gankDayItems);
         }else {
-            Toast.makeText(this, "这一天没有数据哦",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.access_data_fail_tip),Toast.LENGTH_SHORT).show();
         }
 
     }
