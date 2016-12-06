@@ -3,6 +3,7 @@ package com.gank.io.today;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.anupcowkur.reservoir.Reservoir;
 import com.gank.io.R;
 import com.gank.io.model.gank.GankDayData;
 import com.gank.io.model.gank.GankDayItem;
@@ -40,13 +41,35 @@ public class TodayGankPresenter implements TodayContract.Presenter {
         @Override
         public void onNext(List<GankDayItem> gankDayItems) {
             if (gankDayItems.size() > 0) {
-                todayGankView.loadTodayGankData(gankDayItems);
+                Reservoir.putUsingObservable("current_data", gankDayItems).subscribe(new Observer<Boolean>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        todayGankView.showToastTip(context.getString(R.string.access_data_fail_tip));
+                    }
+
+                    @Override
+                    public void onNext(Boolean aBoolean) {
+                        todayGankView.loadTodayGankData(gankDayItems);
+                    }
+                });
+
+
+
             } else {
                 todayGankView.showToastTip(context.getString(R.string.access_data_fail_tip));
             }
 
         }
     };
+
+    public void saveCurrentData(){
+
+    }
 
     private TodayGankPresenter(@NonNull TodayContract.View todayGankView) {
         this.todayGankView = todayGankView;
@@ -68,6 +91,7 @@ public class TodayGankPresenter implements TodayContract.Presenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
+
     }
 
     public void loadData(Calendar c) {

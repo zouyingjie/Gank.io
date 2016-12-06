@@ -73,9 +73,8 @@ public class TodayGankActivity extends BaseActivity
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawerGankToday, toolbarGankToday, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerGankToday.addDrawerListener(toggle);
+
         toggle.syncState();
-
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -94,7 +93,7 @@ public class TodayGankActivity extends BaseActivity
     private void showCalendar() {
         DatePickerDialog.OnDateSetListener listener = (view, year, month, dayOfMonth) -> {
             Calendar c = Calendar.getInstance();
-            c.set(Calendar.YEAR,year);
+            c.set(Calendar.YEAR, year);
             c.set(Calendar.MONTH, month);
             c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
             presenter.loadData(c);
@@ -111,8 +110,32 @@ public class TodayGankActivity extends BaseActivity
     @Override
     protected void onResume() {
         super.onResume();
-        initView();
-        presenter.loadTodayGankData();
+
+//        try {
+//            boolean current_data1 = Reservoir.contains("current_data");
+//            if (current_data1) {
+//                Type resultType = new TypeToken<List<GankDayItem>>() {}.getType();
+//                Reservoir.getAsync("current_data", resultType, new ReservoirGetCallback<List<GankDayItem>>() {
+//                    @Override
+//                    public void onSuccess(List<GankDayItem> gankDayItems) {
+//                        adapter.setData(gankDayItems);
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Exception e) {
+//
+//                    }
+//                });
+//
+//            } else {
+//                presenter.loadTodayGankData();
+//            }
+            presenter.loadTodayGankData();
+
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
     }
 
 
@@ -152,8 +175,10 @@ public class TodayGankActivity extends BaseActivity
 
         }
         drawerGankToday.closeDrawer(GravityCompat.START);
+        item.setCheckable(false);
         return true;
     }
+
 
     private void startActivityWithTitle(Class activity, String title) {
         Intent intent = new Intent(this, activity);
@@ -165,12 +190,12 @@ public class TodayGankActivity extends BaseActivity
 
     @Override
     public void loadTodayGankData(@NonNull List<GankDayItem> gankDayItems) {
-        if (gankDayItems.size() > 0){
+        if (gankDayItems.size() > 0) {
             String imgUrl = ((GankDayContentItem) gankDayItems.remove(gankDayItems.size() - 1)).url;
             ImageUtils.loadImageWithString(this, imgUrl, ivTodayGril);
             adapter.setData(gankDayItems);
-        }else {
-            Toast.makeText(this, getResources().getString(R.string.access_data_fail_tip),Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, getResources().getString(R.string.access_data_fail_tip), Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -192,7 +217,6 @@ public class TodayGankActivity extends BaseActivity
         super.showToastTip(tip);
 //        Toast.makeText(this, tip, Toast.LENGTH_SHORT).show();
     }
-
 
 
 }

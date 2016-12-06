@@ -81,7 +81,7 @@ dependencies {
     compile dependency['annotation']
     compile dependency['cardview']
     compile dependency['glide']
-    compile dependency['glide']
+    compile dependency['reservoir']
 
     annotationProcessor dependency['butterknifeCompiler']
     annotationProcessor dependency['draggerCompiler']

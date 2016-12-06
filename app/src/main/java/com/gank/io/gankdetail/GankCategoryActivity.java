@@ -51,12 +51,14 @@ public class GankCategoryActivity extends BaseActivity {
 
         @Override
         public void onError(Throwable e) {
+            swipeGankCategory.setEnabled(false);
             swipeGankCategory.setRefreshing(false);
             showToastTip(getResources().getString(R.string.access_data_fail_tip));
         }
 
         @Override
         public void onNext(GankCategory gankCategory) {
+            swipeGankCategory.setEnabled(false);
             swipeGankCategory.setRefreshing(false);
             adapter.setData(gankCategory.results);
         }
@@ -75,6 +77,7 @@ public class GankCategoryActivity extends BaseActivity {
         toolbar.setNavigationOnClickListener(v -> finish());
 
         swipeGankCategory.setColorSchemeColors(Color.BLUE, Color.GREEN, Color.RED, Color.YELLOW);
+        swipeGankCategory.setEnabled(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new CategoryAdapter(this, datas);
         recyclerView.setAdapter(adapter);
@@ -101,6 +104,7 @@ public class GankCategoryActivity extends BaseActivity {
     }
 
     private void loadData() {
+        swipeGankCategory.setEnabled(true);
         swipeGankCategory.setRefreshing(true);
         ApiService.getGankApi().getDataByCategory(getIntent().getStringExtra("TITLE"), PAGE_NUMBER, String.valueOf(page))
                 .subscribeOn(Schedulers.io())

@@ -13,7 +13,7 @@ public class Contants {
     //GANK_RESOUSE_TYPE_
     public static final String GANK_RESOUSE_TYPE_WELFARE = "福利";
     public static final String GANK_RESOUSE_TYPE_ANDROID = "Android";
-    public static final String GANK_RESOUSE_TYPE_IOS = "IOS";
+    public static final String GANK_RESOUSE_TYPE_IOS = "iOS";
     public static final String GANK_RESOUSE_TYPE_VIDEO = "休息视频";
     public static final String GANK_RESOUSE_TYPE_EXTRA = "拓展资源";
     public static final String GANK_RESOUSE_TYPE_FRONTEND = "前端";
