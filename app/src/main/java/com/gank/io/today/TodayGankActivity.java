@@ -110,32 +110,7 @@ public class TodayGankActivity extends BaseActivity
     @Override
     protected void onResume() {
         super.onResume();
-
-//        try {
-//            boolean current_data1 = Reservoir.contains("current_data");
-//            if (current_data1) {
-//                Type resultType = new TypeToken<List<GankDayItem>>() {}.getType();
-//                Reservoir.getAsync("current_data", resultType, new ReservoirGetCallback<List<GankDayItem>>() {
-//                    @Override
-//                    public void onSuccess(List<GankDayItem> gankDayItems) {
-//                        adapter.setData(gankDayItems);
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Exception e) {
-//
-//                    }
-//                });
-//
-//            } else {
-//                presenter.loadTodayGankData();
-//            }
-            presenter.loadTodayGankData();
-
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
+        presenter.loadTodayGankData();
     }
 
 
