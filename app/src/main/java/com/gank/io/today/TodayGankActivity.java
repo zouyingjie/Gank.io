@@ -16,7 +16,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -83,35 +82,23 @@ public class TodayGankActivity extends BaseActivity
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerToadyGank.setLayoutManager(linearLayoutManager);
         adapter = new TodayGankAdapter();
-        adapter.setOnItemClickListener(new TodayGankAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(GankDayContentItem item) {
-                Intent intent = new Intent(TodayGankActivity.this, GankDetailActivity.class);
-                intent.putExtra(Contants.GANK_URL, item.url);
-                startActivity(intent);
-            }
+        adapter.setOnItemClickListener(item -> {
+            Intent intent = new Intent(TodayGankActivity.this, GankDetailActivity.class);
+            intent.putExtra(Contants.GANK_URL, item.url);
+            startActivity(intent);
         });
         recyclerToadyGank.setAdapter(adapter);
-
-        fabSelectGankDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showCalendar();
-            }
-        });
+        fabSelectGankDate.setOnClickListener(v -> showCalendar());
     }
 
     private void showCalendar() {
-        DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                Calendar c = Calendar.getInstance();
-                c.set(Calendar.YEAR,year);
-                c.set(Calendar.MONTH, month);
-                c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                presenter.loadData(c);
+        DatePickerDialog.OnDateSetListener listener = (view, year, month, dayOfMonth) -> {
+            Calendar c = Calendar.getInstance();
+            c.set(Calendar.YEAR,year);
+            c.set(Calendar.MONTH, month);
+            c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            presenter.loadData(c);
 
-            }
         };
         Calendar c = Calendar.getInstance();
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, listener, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
@@ -139,7 +126,7 @@ public class TodayGankActivity extends BaseActivity
     }
 
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_zhuang_x:
                 startActivityWithTitle(ZhuangXActivity.class, "");

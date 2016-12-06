@@ -29,7 +29,7 @@ import static com.gank.io.R.id.swipe_gank_category;
 
 public class GankCategoryActivity extends BaseActivity {
 
-    private static final String PAGE_NUMBER = "10";
+    private static final String PAGE_NUMBER = "15";
 
     private int page = 1;
     private List<GankCategory.Result> datas = new ArrayList<>();
@@ -72,24 +72,16 @@ public class GankCategoryActivity extends BaseActivity {
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> finish());
 
         swipeGankCategory.setColorSchemeColors(Color.BLUE, Color.GREEN, Color.RED, Color.YELLOW);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new CategoryAdapter(this, datas);
         recyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(new CategoryAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View v, String url) {
-                Intent intent = new Intent(GankCategoryActivity.this, GankDetailActivity.class);
-                intent.putExtra("GANK_URL", url);
-                startActivity(intent);
-            }
+        adapter.setOnItemClickListener((v, url) -> {
+            Intent intent = new Intent(GankCategoryActivity.this, GankDetailActivity.class);
+            intent.putExtra("GANK_URL", url);
+            startActivity(intent);
         });
 
         fabNextPage.setOnClickListener(new View.OnClickListener() {

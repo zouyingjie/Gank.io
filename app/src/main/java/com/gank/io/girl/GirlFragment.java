@@ -31,7 +31,7 @@ import butterknife.ButterKnife;
 public class GirlFragment extends Fragment implements GirlContract.View, SwipeRefreshLayout.OnRefreshListener {
 
     private GirlPresenter presenter;
-    private ArrayList<GankGirlItem> girls = new ArrayList<GankGirlItem>();
+    private ArrayList<GankGirlItem> girls = new ArrayList<>();
     GirlAdapter adapter;
 
     @BindView(R.id.recycler_girl)
@@ -83,16 +83,13 @@ public class GirlFragment extends Fragment implements GirlContract.View, SwipeRe
                 super.onScrolled(recyclerView, dx, dy);
             }
         });
-        adapter.setOnItemClickListener(new GirlAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClickListener(View v, int position) {
-                v.setTransitionName("robot");
-                GankGirlItem item = girls.get(position);
-                Intent intent = new Intent(getActivity(), GirlImageActivity.class);
-                intent.putExtra("GIRL_DESC", item.description);
-                intent.putExtra("GIRL_URL", item.imageUrl);
-                startActivity(intent);
-            }
+        adapter.setOnItemClickListener((v, position) -> {
+            v.setTransitionName("robot");
+            GankGirlItem item = girls.get(position);
+            Intent intent = new Intent(getActivity(), GirlImageActivity.class);
+            intent.putExtra("GIRL_DESC", item.description);
+            intent.putExtra("GIRL_URL", item.imageUrl);
+            startActivity(intent);
         });
     }
 

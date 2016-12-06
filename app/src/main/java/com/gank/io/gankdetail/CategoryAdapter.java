@@ -1,5 +1,6 @@
 package com.gank.io.gankdetail;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -43,15 +44,11 @@ public class CategoryAdapter extends RecyclerView.Adapter {
         return new VH(view);
     }
 
+    @SuppressLint("RecyclerView")
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ((VH) holder).textView.setText(results.get(position).desc);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onItemClick(v, results.get(position).url);
-            }
-        });
+        holder.itemView.setOnClickListener(v -> listener.onItemClick(v, results.get(position).url));
     }
 
     @Override

@@ -36,7 +36,7 @@ public class ZhuangXPresenter implements ZhuangXContract.Presenter {
             @Override
             public void onResponse(Call<List<ZhuangXImage>> call, Response<List<ZhuangXImage>> response) {
                 List<ZhuangXImage> zhuangXImages = response.body();
-                List<ZhuangXImage> imageDatas = new ArrayList<ZhuangXImage>();
+                List<ZhuangXImage> imageDatas = new ArrayList<>();
                 //只显示jpg、png和gif三种格式的图片
                 for (ZhuangXImage image : zhuangXImages) {
                     if (image.image_url.contains(".jpg")

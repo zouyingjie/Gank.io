@@ -54,12 +54,7 @@ public class GirlAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         GankGirlItem girlItem = girls.get(position);
         ImageUtils.loadImageWithString(context, girlItem.imageUrl, ((GirlHolder) holder).ivGirl);
         ((GirlHolder) holder).tvDescription.setText(girlItem.description);
-        ((GirlHolder) holder).ivGirl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onItemClickListener(v, position);
-            }
-        });
+        ((GirlHolder) holder).ivGirl.setOnClickListener(v -> listener.onItemClickListener(v, position));
 
     }
 

@@ -41,12 +41,7 @@ public class GankDetailActivity extends AppCompatActivity {
         setSupportActionBar(toolbarGankDetail);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        toolbarGankDetail.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        toolbarGankDetail.setNavigationOnClickListener(v -> finish());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark, getTheme()));
         }

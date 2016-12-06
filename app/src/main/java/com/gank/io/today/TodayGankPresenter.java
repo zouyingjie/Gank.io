@@ -86,14 +86,13 @@ public class TodayGankPresenter implements TodayContract.Presenter {
      * @return
      */
     private Observable<GankDayData> getGankDataByDate(Calendar c) {
-        StringBuffer date = new StringBuffer();
-        date.append(c.get(Calendar.YEAR))
-                .append("/")
-                .append(c.get(Calendar.MONTH))
-                .append("/")
-                .append(c.get(Calendar.DAY_OF_MONTH));
+        String date = String.valueOf(c.get(Calendar.YEAR)) +
+                "/" +
+                c.get(Calendar.MONTH) +
+                "/" +
+                c.get(Calendar.DAY_OF_MONTH);
 
-        return ApiService.getGankApi().getDataByDate(date.toString());
+        return ApiService.getGankApi().getDataByDate(date);
     }
 
     @Override

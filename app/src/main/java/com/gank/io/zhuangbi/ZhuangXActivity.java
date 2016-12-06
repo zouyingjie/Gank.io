@@ -3,7 +3,6 @@ package com.gank.io.zhuangbi;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import com.gank.io.R;
 import com.gank.io.base.BaseActivity;
@@ -21,12 +20,7 @@ public class ZhuangXActivity extends BaseActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> finish());
 
         ZhuangXFragment zhuangXFragment = new ZhuangXFragment();
         getSupportFragmentManager()

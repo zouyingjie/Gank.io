@@ -81,12 +81,7 @@ public class TodayGankAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         final GankDayItem gankDayItem = items.get(position);
         if (holder instanceof ContentHolder) {
             ((ContentHolder) holder).tvContentTitle.setText(((GankDayContentItem) gankDayItem).desc);
-            ((ContentHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listener.onItemClick((GankDayContentItem) gankDayItem);
-                }
-            });
+            ((ContentHolder) holder).itemView.setOnClickListener(v -> listener.onItemClick((GankDayContentItem) gankDayItem));
         }
 
         if (holder instanceof TitleHolder) {
