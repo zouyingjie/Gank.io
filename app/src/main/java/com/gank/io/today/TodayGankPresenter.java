@@ -79,12 +79,6 @@ public class TodayGankPresenter implements TodayContract.Presenter {
     }
 
 
-    /**
-     * 获取对应日期的数据
-     *
-     * @param c
-     * @return
-     */
     private Observable<GankDayData> getGankDataByDate(Calendar c) {
         String date = String.valueOf(c.get(Calendar.YEAR)) +
                 "/" +

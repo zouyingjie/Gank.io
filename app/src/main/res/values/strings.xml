@@ -4,22 +4,16 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
-
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="girl_lable">Hello Girl</string>
     <string name="zhuangbi_lable">Ha Sa Kei</string>
     <string name="menu_zhuangx">装X趣图</string>
     <string name="menu_girl">妹子福利</string>
-    <string name="title_activity_main2">Main2Activity</string>
     <string name="menu_title_image">Image</string>
-    <string name="query_error_tip">接收数据失败,请重试</string>
     <string name="title_android">Android</string>
     <string name="title_ios">IOS</string>
     <string name="title_front">前端</string>
     <string name="title_video">视频</string>
     <string name="title_extra">拓展资源</string>
-    <string name="loading">正在加载</string>
     <string name="access_data_fail_tip">没有获取到数据哦,请在试一下下鸟~muA</string>
 </resources>

@@ -1,4 +1,7 @@
 <resources>
+    <!--default value-->
+    <dimen name="dimen_dp_4">4dp</dimen>
+
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="nav_header_vertical_spacing">16dp</dimen>
     <dimen name="nav_header_height">160dp</dimen>
@@ -9,13 +12,17 @@
     <dimen name="fab_margin_bottom">72dp</dimen>
 
     <!--Bottom Sheet Dimen-->
-    <dimen name="bottom_sheet_grid_horizontal_padding">24dp</dimen>
-    <dimen name="bottom_sheet_grid_image_height">48dp</dimen>
-    <dimen name="bottom_sheet_grid_title_height">16dp</dimen>
-    <dimen name="bottom_sheet_grid_title_text_size">8sp</dimen>
 
     <!--Today Gank List-->
     <dimen name="today_gank_list_item_padding">8dp</dimen>
     <dimen name="today_gank_list_image_width">24dp</dimen>
     <dimen name="today_gank_list_content_text_size">18sp</dimen>
+
+    <dimen name="girl_image_card_desc_text_size">14sp</dimen>
+    <dimen name="girl_image_card_height">160dp</dimen>
+    <dimen name="girl_imgae_card_margin_top">4dp</dimen>
+    <dimen name="girl_imgae_card_margin_bottom">4dp</dimen>
+    <dimen name="girl_imgae_card_corner_radius">2dp</dimen>
+    <dimen name="girl_imgae_card_margin_start">8dp</dimen>
+    <dimen name="girl_imgae_card_margin_end">8dp</dimen>
 </resources>
