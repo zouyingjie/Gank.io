@@ -58,7 +58,6 @@ public class GirlAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     }
 
-
     @Override
     public int getItemCount() {
         return girls.size();

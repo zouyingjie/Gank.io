@@ -9,7 +9,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import com.gank.io.R;
 import com.gank.io.base.BaseActivity;
@@ -87,13 +86,10 @@ public class GankCategoryActivity extends BaseActivity {
             startActivity(intent);
         });
 
-        fabNextPage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                swipeGankCategory.setRefreshing(true);
-                page++;
-                loadData();
-            }
+        fabNextPage.setOnClickListener(v -> {
+            swipeGankCategory.setRefreshing(true);
+            page++;
+            loadData();
         });
     }
 

@@ -19,6 +19,7 @@ import java.util.List;
  */
 
 public class CategoryAdapter extends RecyclerView.Adapter {
+
     private Context context;
     private List<GankCategory.Result> results;
     private OnItemClickListener listener;
@@ -64,10 +65,7 @@ public class CategoryAdapter extends RecyclerView.Adapter {
             super(itemView);
             textView = (TextView) itemView.findViewById(R.id.tv_gank_content_title);
         }
-
-
     }
-
 
     public interface OnItemClickListener {
         void onItemClick(View v, String url);

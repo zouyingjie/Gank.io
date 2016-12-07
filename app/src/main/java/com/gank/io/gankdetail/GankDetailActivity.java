@@ -1,6 +1,5 @@
 package com.gank.io.gankdetail;
 
-import android.annotation.TargetApi;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,7 +28,6 @@ public class GankDetailActivity extends AppCompatActivity {
     @BindView(R.id.toolbar_gank_detail)
     Toolbar toolbarGankDetail;
 
-    @TargetApi(Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +40,7 @@ public class GankDetailActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         toolbarGankDetail.setNavigationOnClickListener(v -> finish());
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark, getTheme()));
         }
 

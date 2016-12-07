@@ -3,10 +3,13 @@ package com.gank.io.girl;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
 
+import com.gank.io.R;
 import com.gank.io.model.girl.GankGirlItem;
 import com.gank.io.network.ApiService;
 import com.gank.io.util.GankBeautyResultToItemsMapper;
+
 import java.util.List;
+
 import rx.Observer;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -22,19 +25,23 @@ public class GirlPresenter implements GirlContract.Presenter {
     private Observer<List<GankGirlItem>> observer = new Observer<List<GankGirlItem>>() {
         @Override
         public void onCompleted() {
-            Toast.makeText(((GirlFragment) girlView).getContext(), "Completed", Toast.LENGTH_LONG).show();
         }
 
         @Override
         public void onError(Throwable e) {
             girlView.endPullRefresh();
-            Toast.makeText(((GirlFragment) girlView).getContext(), e.toString(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(((GirlFragment) girlView).getContext(), ((GirlFragment) girlView).getContext().getString(R.string.access_data_fail_tip), Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onNext(List<GankGirlItem> images) {
             girlView.endPullRefresh();
-            girlView.refreshImages(images);
+            if (images.size() > 0) {
+                girlView.refreshImages(images);
+            } else {
+                Toast.makeText(((GirlFragment) girlView).getContext(), ((GirlFragment) girlView).getContext().getString(R.string.access_data_fail_tip), Toast.LENGTH_SHORT).show();
+            }
+
         }
     };
 
@@ -53,9 +60,7 @@ public class GirlPresenter implements GirlContract.Presenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
-
     }
-
 
     @Override
     public void unsubscribe() {

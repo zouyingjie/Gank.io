@@ -10,7 +10,7 @@ public class Contants {
     public static final String ZHUANGX_BASE_URL = "http://zhuangbi.info/";
     public static final String GANK_URL = "GANK_URL";
 
-    //GANK_RESOUSE_TYPE_
+    //GANK_RESOUSE_TYPE
     public static final String GANK_RESOUSE_TYPE_WELFARE = "福利";
     public static final String GANK_RESOUSE_TYPE_ANDROID = "Android";
     public static final String GANK_RESOUSE_TYPE_IOS = "iOS";

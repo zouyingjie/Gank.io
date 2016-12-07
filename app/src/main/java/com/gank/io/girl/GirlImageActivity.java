@@ -21,7 +21,6 @@ public class GirlImageActivity extends BaseActivity {
     @BindView(R.id.toolbar_girl_image)
     Toolbar toolbar;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

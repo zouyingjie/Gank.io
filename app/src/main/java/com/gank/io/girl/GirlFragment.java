@@ -32,7 +32,7 @@ public class GirlFragment extends Fragment implements GirlContract.View, SwipeRe
 
     private GirlPresenter presenter;
     private ArrayList<GankGirlItem> girls = new ArrayList<>();
-    GirlAdapter adapter;
+    private GirlAdapter adapter;
 
     @BindView(R.id.recycler_girl)
     RecyclerView recyclerGirl;
