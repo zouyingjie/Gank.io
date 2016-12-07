@@ -25,4 +25,5 @@
     <dimen name="girl_imgae_card_corner_radius">2dp</dimen>
     <dimen name="girl_imgae_card_margin_start">8dp</dimen>
     <dimen name="girl_imgae_card_margin_end">8dp</dimen>
+    <dimen name="fab_elevation">6dp</dimen>
 </resources>
