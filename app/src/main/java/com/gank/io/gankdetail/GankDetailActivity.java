@@ -1,5 +1,7 @@
 package com.gank.io.gankdetail;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
@@ -76,5 +78,11 @@ public class GankDetailActivity extends AppCompatActivity {
         };
         webView.setWebViewClient(client);
 
+    }
+
+    public static void actionStart(Context context, String gankUrl){
+        Intent intent = new Intent(context, GankDetailActivity.class);
+        intent.putExtra(Contants.GANK_URL, gankUrl);
+        context.startActivity(intent);
     }
 }

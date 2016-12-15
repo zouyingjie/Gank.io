@@ -1,5 +1,6 @@
 package com.gank.io.girl;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -46,5 +47,12 @@ public class GirlImageActivity extends BaseActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
         }
+    }
+
+    public static void actionStart(Context context,  String girlDesc, String girlUrl){
+        Intent intent = new Intent(context, GirlImageActivity.class);
+        intent.putExtra("GIRL_DESC", girlDesc);
+        intent.putExtra("GIRL_URL", girlUrl);
+        context.startActivity(intent);
     }
 }

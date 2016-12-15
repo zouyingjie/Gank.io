@@ -1,5 +1,7 @@
 package com.gank.io.girl;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -29,5 +31,10 @@ public class GirlActivity extends BaseActivity {
                 .commit();
 
 
+    }
+
+    public static void actionStart(Context context){
+        Intent intent = new Intent(context, GirlActivity.class);
+        context.startActivity(intent);
     }
 }

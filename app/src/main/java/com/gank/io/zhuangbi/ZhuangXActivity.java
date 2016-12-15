@@ -1,5 +1,7 @@
 package com.gank.io.zhuangbi;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -28,5 +30,10 @@ public class ZhuangXActivity extends BaseActivity {
                 .add(R.id.fl_zhuang_content, zhuangXFragment)
                 .commit();
         new ZhuangXPresenter(zhuangXFragment);
+    }
+
+    public static void actionStart(Context context){
+        Intent intent = new Intent(context, ZhuangXActivity.class);
+        context.startActivity(intent);
     }
 }

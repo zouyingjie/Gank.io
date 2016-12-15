@@ -2,7 +2,6 @@ package com.gank.io.girl;
 
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -86,10 +85,7 @@ public class GirlFragment extends Fragment implements GirlContract.View, SwipeRe
         adapter.setOnItemClickListener((v, position) -> {
             v.setTransitionName("robot");
             GankGirlItem item = girls.get(position);
-            Intent intent = new Intent(getActivity(), GirlImageActivity.class);
-            intent.putExtra("GIRL_DESC", item.description);
-            intent.putExtra("GIRL_URL", item.imageUrl);
-            startActivity(intent);
+            GirlImageActivity.actionStart(getActivity(), item.description, item.imageUrl);
         });
     }
 

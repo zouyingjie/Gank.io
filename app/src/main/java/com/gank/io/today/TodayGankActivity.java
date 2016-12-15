@@ -14,7 +14,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.MenuItem;
 import android.widget.DatePicker;
 import android.widget.ImageView;
@@ -39,7 +38,6 @@ import butterknife.ButterKnife;
 
 public class TodayGankActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener, TodayContract.View {
-
 
     private TodayContract.Presenter presenter;
     private TodayGankAdapter adapter;
@@ -104,7 +102,6 @@ public class TodayGankActivity extends BaseActivity
         DatePicker datePicker = datePickerDialog.getDatePicker();
         datePicker.setMaxDate(c.getTimeInMillis());
         datePickerDialog.show();
-
     }
 
     @Override
@@ -112,7 +109,6 @@ public class TodayGankActivity extends BaseActivity
         super.onResume();
         presenter.loadTodayGankData();
     }
-
 
     @Override
     public void onBackPressed() {
@@ -127,40 +123,31 @@ public class TodayGankActivity extends BaseActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_zhuang_x:
-                startActivityWithTitle(ZhuangXActivity.class, "");
+                ZhuangXActivity.actionStart(this);
                 break;
             case R.id.nav_girl:
-                startActivityWithTitle(GirlActivity.class, "");
+                GirlActivity.actionStart(this);
                 break;
             case R.id.nav_android:
-                startActivityWithTitle(GankCategoryActivity.class, Contants.GANK_RESOUSE_TYPE_ANDROID);
+                GankCategoryActivity.actionStart(this, Contants.GANK_RESOUSE_TYPE_ANDROID);
                 break;
             case R.id.nav_ios:
-                startActivityWithTitle(GankCategoryActivity.class, Contants.GANK_RESOUSE_TYPE_IOS);
+                GankCategoryActivity.actionStart(this, Contants.GANK_RESOUSE_TYPE_IOS);
                 break;
             case R.id.nav_frontend:
-                startActivityWithTitle(GankCategoryActivity.class, Contants.GANK_RESOUSE_TYPE_FRONTEND);
+                GankCategoryActivity.actionStart(this, Contants.GANK_RESOUSE_TYPE_FRONTEND);
                 break;
             case R.id.nav_video:
-                startActivityWithTitle(GankCategoryActivity.class, Contants.GANK_RESOUSE_TYPE_VIDEO);
+                GankCategoryActivity.actionStart(this, Contants.GANK_RESOUSE_TYPE_VIDEO);
                 break;
             case R.id.nav_extral:
-                startActivityWithTitle(GankCategoryActivity.class, Contants.GANK_RESOUSE_TYPE_EXTRA);
+                GankCategoryActivity.actionStart(this, Contants.GANK_RESOUSE_TYPE_EXTRA);
                 break;
 
         }
         drawerGankToday.closeDrawer(GravityCompat.START);
         item.setCheckable(false);
         return true;
-    }
-
-
-    private void startActivityWithTitle(Class activity, String title) {
-        Intent intent = new Intent(this, activity);
-        if (!TextUtils.isEmpty(title)) {
-            intent.putExtra("TITLE", title);
-        }
-        startActivity(intent);
     }
 
     @Override
@@ -175,7 +162,6 @@ public class TodayGankActivity extends BaseActivity
 
     }
 
-
     @Override
     public void setPresenter(TodayContract.Presenter presenter) {
         this.presenter = presenter;
@@ -188,10 +174,7 @@ public class TodayGankActivity extends BaseActivity
 
     @Override
     public void showToastTip(String tip) {
-//        showToastTip(tip);
         super.showToastTip(tip);
-//        Toast.makeText(this, tip, Toast.LENGTH_SHORT).show();
     }
-
 
 }

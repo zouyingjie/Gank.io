@@ -1,5 +1,6 @@
 package com.gank.io.gankdetail;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -81,9 +82,7 @@ public class GankCategoryActivity extends BaseActivity {
         adapter = new CategoryAdapter(this, datas);
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener((v, url) -> {
-            Intent intent = new Intent(GankCategoryActivity.this, GankDetailActivity.class);
-            intent.putExtra("GANK_URL", url);
-            startActivity(intent);
+            GankDetailActivity.actionStart(GankCategoryActivity.this, url);
         });
 
         fabNextPage.setOnClickListener(v -> {
@@ -96,7 +95,9 @@ public class GankCategoryActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        loadData();
+        if (adapter.getItemCount() == 0) {
+            loadData();
+        }
     }
 
     private void loadData() {
@@ -106,6 +107,12 @@ public class GankCategoryActivity extends BaseActivity {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
+    }
+
+    public static void actionStart(Context context, String title){
+        Intent intent = new Intent(context, GankCategoryActivity.class);
+        intent.putExtra("TITLE", title);
+        context.startActivity(intent);
     }
 
 }
