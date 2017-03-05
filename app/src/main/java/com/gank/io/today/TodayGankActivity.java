@@ -67,6 +67,7 @@ public class TodayGankActivity extends BaseActivity
     }
 
     private void initView() {
+//        drawerGankToday = (DrawerLayout) findViewById(R.id.drawer_gank_today);
         setSupportActionBar(toolbarGankToday);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawerGankToday, toolbarGankToday, R.string.navigation_drawer_open, R.string.navigation_drawer_close);

@@ -1,5 +1,6 @@
 package com.gank.io.zhuangbi;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -51,7 +52,7 @@ public class ZhuangXFragment extends Fragment implements ZhuangXContract.View{
         recyclerZhuagnx.setLayoutManager(manager);
         adapter = new ZhuangXAdapter(getContext(), zhuangImages);
         recyclerZhuagnx.setAdapter(adapter);
-//        swipeZhuangx.setColorSchemeColors(Color.BLUE, Color.GREEN, Color.RED, Color.YELLOW);
+        swipeZhuangx.setColorSchemeColors(Color.BLUE, Color.GREEN, Color.RED, Color.YELLOW);
 //        swipeZhuangx.setEnabled(false);
 //        swipeZhuangx.setOnRefreshListener(this);
     }

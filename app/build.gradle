@@ -16,7 +16,6 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion rootProject.ext.androidCompileSdkVersion
     buildToolsVersion rootProject.ext.androidBuildToolsVersion
-
     lintOptions {
         disable 'InvalidPackage'
         checkReleaseBuilds false
@@ -24,9 +23,8 @@ android {
         // but continue the build even when errors are found:
         abortOnError false
     }
-
     defaultConfig {
-        applicationId "com.gank.io"
+        applicationId 'com.gank.app'
         minSdkVersion rootProject.ext.androidMinSdkVersion
         targetSdkVersion rootProject.ext.androidTargetSdkVersion
         versionCode 1
@@ -43,18 +41,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
-        xys {
-            applicationIdSuffix ".xys"
-        }
+//        xys {
+//            applicationIdSuffix ".xys"
+//        }
     }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
-
-
+    productFlavors {
+    }
 }
 
 /**
@@ -82,16 +78,13 @@ dependencies {
     compile dependency['cardview']
     compile dependency['glide']
     compile dependency['reservoir']
-
     annotationProcessor dependency['butterknifeCompiler']
     annotationProcessor dependency['draggerCompiler']
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha7'
     compile 'com.android.support:support-v4:25.0.1'
     testCompile 'junit:junit:4.12'
-
-//    releaseCompile dependency['leakcanaryRelease']
-//    testCompile dependency['leakcanaryTest']
-
+    //    releaseCompile dependency['leakcanaryRelease']
+    //    testCompile dependency['leakcanaryTest']
 }
 
 tasks.whenTaskAdded { task ->
